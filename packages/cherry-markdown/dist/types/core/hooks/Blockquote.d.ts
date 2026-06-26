@@ -1,10 +1,11 @@
 export default class Blockquote extends ParagraphBase {
     constructor();
     handleMatch(str: any, sentenceMakeFunc: any): any;
+    makeHtml(str: any, sentenceMakeFunc: any): any;
     rule(): {
         begin: string;
         content: string;
         end: string;
     };
 }
-import ParagraphBase from "@/core/ParagraphBase";
+import ParagraphBase from '@/core/ParagraphBase';

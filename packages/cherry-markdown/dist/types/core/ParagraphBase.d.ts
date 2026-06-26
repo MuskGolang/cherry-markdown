@@ -7,9 +7,24 @@ export default class ParagraphBase extends SyntaxBase {
     });
     needCache: boolean;
     sign: string;
-    cache: {};
+    cache: LRUCache;
     cacheKey: string;
-    failedResetCacheTimes: number;
+    cacheData: {};
+    cacheDataMap: any[];
+    /**
+     * 缓存数据，并返回缓存数据，当缓存大于maxKeys时，会删除removeKeys个缓存
+     * @param {string} key 缓存的key
+     * @param {function} getValueByKey 用于获取缓存数据的回调函数
+     * @param {number} maxKeys 最大缓存数
+     * @param {number} removeKeys 每次删除的缓存数
+     * @param {boolean} focusUpdate 是否更新缓存
+     * @returns {any}
+     */
+    cacheAndGetData(key: string, getValueByKey: Function, maxKeys: number, removeKeys: number, focusUpdate?: boolean): any;
+    /**
+     * 清空所有缓存
+     */
+    clearCache(): void;
     initBrReg(classicBr?: boolean): void;
     classicBr: boolean;
     removeBrAfterBlock: RegExp;
@@ -28,8 +43,18 @@ export default class ParagraphBase extends SyntaxBase {
      */
     joinRawHtml(textContainsHtml: string): string;
     toHtml(str: any, sentenceMakeFunc: any): any;
-    makeHtml(str: any, sentenceMakeFunc: any): any;
-    afterMakeHtml(html: any): any;
+    beforeMakeHtml(str: any, sentenceMakeFunc?: (md: any) => {
+        sign: string;
+        html: any;
+    }): any;
+    makeHtml(str: any, sentenceMakeFunc?: (md: any) => {
+        sign: string;
+        html: any;
+    }): any;
+    afterMakeHtml(str: any, sentenceMakeFunc?: (md: any) => {
+        sign: string;
+        html: any;
+    }): any;
     isContainsCache(str: any, fullMatch: any): boolean;
     /**
      *
@@ -71,7 +96,6 @@ export default class ParagraphBase extends SyntaxBase {
     testHasCache(sign: any): any;
     resetCache(): void;
     restoreCache(html: any): any;
-    timer: NodeJS.Timeout;
     /**
      *
      * @param {string} wholeMatch whole match
@@ -79,4 +103,5 @@ export default class ParagraphBase extends SyntaxBase {
     checkCache(wholeMatch: string, sentenceMakeFunc: any, lineCount?: number): any;
     signWithCache(html: any): boolean;
 }
-import SyntaxBase from "./SyntaxBase";
+import SyntaxBase from './SyntaxBase';
+import LRUCache from '../utils/LRUCache';

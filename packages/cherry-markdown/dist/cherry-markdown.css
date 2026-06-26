@@ -1,504 +1,4 @@
 @charset "UTF-8";
-/* BASICS */
-.CodeMirror {
-  /* Set height, width, borders, and global font properties here */
-  font-family: monospace;
-  height: 300px;
-  color: black;
-  direction: ltr;
-}
-
-/* PADDING */
-.CodeMirror-lines {
-  padding: 4px 0; /* Vertical padding around content */
-}
-
-.CodeMirror pre.CodeMirror-line,
-.CodeMirror pre.CodeMirror-line-like {
-  padding: 0 4px; /* Horizontal padding of content */
-}
-
-.CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler {
-  background-color: white; /* The little square between H and V scrollbars */
-}
-
-/* GUTTER */
-.CodeMirror-gutters {
-  border-right: 1px solid #ddd;
-  background-color: #f7f7f7;
-  white-space: nowrap;
-}
-
-.CodeMirror-linenumber {
-  padding: 0 3px 0 5px;
-  min-width: 20px;
-  text-align: right;
-  color: #999;
-  white-space: nowrap;
-}
-
-.CodeMirror-guttermarker {
-  color: black;
-}
-
-.CodeMirror-guttermarker-subtle {
-  color: #999;
-}
-
-/* CURSOR */
-.CodeMirror-cursor {
-  border-left: 1px solid black;
-  border-right: none;
-  width: 0;
-}
-
-/* Shown when moving in bi-directional text */
-.CodeMirror div.CodeMirror-secondarycursor {
-  border-left: 1px solid silver;
-}
-
-.cm-fat-cursor .CodeMirror-cursor {
-  width: auto;
-  border: 0 !important;
-  background: #7e7;
-}
-
-.cm-fat-cursor div.CodeMirror-cursors {
-  z-index: 1;
-}
-
-.cm-fat-cursor-mark {
-  background-color: rgba(20, 255, 20, 0.5);
-  -webkit-animation: blink 1.06s steps(1) infinite;
-  -moz-animation: blink 1.06s steps(1) infinite;
-  animation: blink 1.06s steps(1) infinite;
-}
-
-.cm-animate-fat-cursor {
-  width: auto;
-  border: 0;
-  -webkit-animation: blink 1.06s steps(1) infinite;
-  -moz-animation: blink 1.06s steps(1) infinite;
-  animation: blink 1.06s steps(1) infinite;
-  background-color: #7e7;
-}
-
-@-moz-keyframes blink {
-  50% {
-    background-color: transparent;
-  }
-}
-@-webkit-keyframes blink {
-  50% {
-    background-color: transparent;
-  }
-}
-@keyframes blink {
-  50% {
-    background-color: transparent;
-  }
-}
-/* Can style cursor different in overwrite (non-insert) mode */
-.cm-tab {
-  display: inline-block;
-  text-decoration: inherit;
-}
-
-.CodeMirror-rulers {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -50px;
-  bottom: 0;
-  overflow: hidden;
-}
-
-.CodeMirror-ruler {
-  border-left: 1px solid #ccc;
-  top: 0;
-  bottom: 0;
-  position: absolute;
-}
-
-/* DEFAULT THEME */
-.cm-s-default .cm-header {
-  color: blue;
-}
-
-.cm-s-default .cm-quote {
-  color: #090;
-}
-
-.cm-negative {
-  color: #d44;
-}
-
-.cm-positive {
-  color: #292;
-}
-
-.cm-header, .cm-strong {
-  font-weight: bold;
-}
-
-.cm-em {
-  font-style: italic;
-}
-
-.cm-link {
-  text-decoration: underline;
-}
-
-.cm-strikethrough {
-  text-decoration: line-through;
-}
-
-.cm-s-default .cm-keyword {
-  color: #708;
-}
-
-.cm-s-default .cm-atom {
-  color: #219;
-}
-
-.cm-s-default .cm-number {
-  color: #164;
-}
-
-.cm-s-default .cm-def {
-  color: #00f;
-}
-
-.cm-s-default .cm-variable-2 {
-  color: #05a;
-}
-
-.cm-s-default .cm-variable-3, .cm-s-default .cm-type {
-  color: #085;
-}
-
-.cm-s-default .cm-comment {
-  color: #a50;
-}
-
-.cm-s-default .cm-string {
-  color: #a11;
-}
-
-.cm-s-default .cm-string-2 {
-  color: #f50;
-}
-
-.cm-s-default .cm-meta {
-  color: #555;
-}
-
-.cm-s-default .cm-qualifier {
-  color: #555;
-}
-
-.cm-s-default .cm-builtin {
-  color: #30a;
-}
-
-.cm-s-default .cm-bracket {
-  color: #997;
-}
-
-.cm-s-default .cm-tag {
-  color: #170;
-}
-
-.cm-s-default .cm-attribute {
-  color: #00c;
-}
-
-.cm-s-default .cm-hr {
-  color: #999;
-}
-
-.cm-s-default .cm-link {
-  color: #00c;
-}
-
-.cm-s-default .cm-error {
-  color: #f00;
-}
-
-.cm-invalidchar {
-  color: #f00;
-}
-
-.CodeMirror-composing {
-  border-bottom: 2px solid;
-}
-
-/* Default styles for common addons */
-div.CodeMirror span.CodeMirror-matchingbracket {
-  color: #0b0;
-}
-
-div.CodeMirror span.CodeMirror-nonmatchingbracket {
-  color: #a22;
-}
-
-.CodeMirror-matchingtag {
-  background: rgba(255, 150, 0, 0.3);
-}
-
-.CodeMirror-activeline-background {
-  background: #e8f2ff;
-}
-
-/* STOP */
-/* The rest of this file contains styles related to the mechanics of
-   the editor. You probably shouldn't touch them. */
-.CodeMirror {
-  position: relative;
-  overflow: hidden;
-  background: white;
-}
-
-.CodeMirror-scroll {
-  overflow: scroll !important; /* Things will break if this is overridden */
-  /* 50px is the magic margin used to hide the element's real scrollbars */
-  /* See overflow: hidden in .CodeMirror */
-  margin-bottom: -50px;
-  margin-right: -50px;
-  padding-bottom: 50px;
-  height: 100%;
-  outline: none; /* Prevent dragging from highlighting the element */
-  position: relative;
-}
-
-.CodeMirror-sizer {
-  position: relative;
-  border-right: 50px solid transparent;
-}
-
-/* The fake, visible scrollbars. Used to force redraw during scrolling
-   before actual scrolling happens, thus preventing shaking and
-   flickering artifacts. */
-.CodeMirror-vscrollbar, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler {
-  position: absolute;
-  z-index: 6;
-  display: none;
-  outline: none;
-}
-
-.CodeMirror-vscrollbar {
-  right: 0;
-  top: 0;
-  overflow-x: hidden;
-  overflow-y: scroll;
-}
-
-.CodeMirror-hscrollbar {
-  bottom: 0;
-  left: 0;
-  overflow-y: hidden;
-  overflow-x: scroll;
-}
-
-.CodeMirror-scrollbar-filler {
-  right: 0;
-  bottom: 0;
-}
-
-.CodeMirror-gutter-filler {
-  left: 0;
-  bottom: 0;
-}
-
-.CodeMirror-gutters {
-  position: absolute;
-  left: 0;
-  top: 0;
-  min-height: 100%;
-  z-index: 3;
-}
-
-.CodeMirror-gutter {
-  white-space: normal;
-  height: 100%;
-  display: inline-block;
-  vertical-align: top;
-  margin-bottom: -50px;
-}
-
-.CodeMirror-gutter-wrapper {
-  position: absolute;
-  z-index: 4;
-  background: none !important;
-  border: none !important;
-}
-
-.CodeMirror-gutter-background {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  z-index: 4;
-}
-
-.CodeMirror-gutter-elt {
-  position: absolute;
-  cursor: default;
-  z-index: 4;
-}
-
-.CodeMirror-gutter-wrapper ::selection {
-  background-color: transparent;
-}
-
-.CodeMirror-gutter-wrapper ::-moz-selection {
-  background-color: transparent;
-}
-
-.CodeMirror-lines {
-  cursor: text;
-  min-height: 1px; /* prevents collapsing before first draw */
-}
-
-.CodeMirror pre.CodeMirror-line,
-.CodeMirror pre.CodeMirror-line-like {
-  /* Reset some styles that the rest of the page might have set */
-  -moz-border-radius: 0;
-  -webkit-border-radius: 0;
-  border-radius: 0;
-  border-width: 0;
-  background: transparent;
-  font-family: inherit;
-  font-size: inherit;
-  margin: 0;
-  white-space: pre;
-  word-wrap: normal;
-  line-height: inherit;
-  color: inherit;
-  z-index: 2;
-  position: relative;
-  overflow: visible;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-font-variant-ligatures: contextual;
-  font-variant-ligatures: contextual;
-}
-
-.CodeMirror-wrap pre.CodeMirror-line,
-.CodeMirror-wrap pre.CodeMirror-line-like {
-  word-wrap: break-word;
-  white-space: pre-wrap;
-  word-break: normal;
-}
-
-.CodeMirror-linebackground {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 0;
-}
-
-.CodeMirror-linewidget {
-  position: relative;
-  z-index: 2;
-  padding: 0.1px; /* Force widget margins to stay inside of the container */
-}
-
-.CodeMirror-rtl pre {
-  direction: rtl;
-}
-
-.CodeMirror-code {
-  outline: none;
-}
-
-/* Force content-box sizing for the elements where we expect it */
-.CodeMirror-scroll,
-.CodeMirror-sizer,
-.CodeMirror-gutter,
-.CodeMirror-gutters,
-.CodeMirror-linenumber {
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-}
-
-.CodeMirror-measure {
-  position: absolute;
-  width: 100%;
-  height: 0;
-  overflow: hidden;
-  visibility: hidden;
-}
-
-.CodeMirror-cursor {
-  position: absolute;
-  pointer-events: none;
-}
-
-.CodeMirror-measure pre {
-  position: static;
-}
-
-div.CodeMirror-cursors {
-  visibility: hidden;
-  position: relative;
-  z-index: 3;
-}
-
-div.CodeMirror-dragcursors {
-  visibility: visible;
-}
-
-.CodeMirror-focused div.CodeMirror-cursors {
-  visibility: visible;
-}
-
-.CodeMirror-selected {
-  background: #d9d9d9;
-}
-
-.CodeMirror-focused .CodeMirror-selected {
-  background: #d7d4f0;
-}
-
-.CodeMirror-crosshair {
-  cursor: crosshair;
-}
-
-.CodeMirror-line::selection, .CodeMirror-line > span::selection, .CodeMirror-line > span > span::selection {
-  background: #d7d4f0;
-}
-
-.CodeMirror-line::-moz-selection, .CodeMirror-line > span::-moz-selection, .CodeMirror-line > span > span::-moz-selection {
-  background: #d7d4f0;
-}
-
-.cm-searching {
-  background-color: #ffa;
-  background-color: rgba(255, 255, 0, 0.4);
-}
-
-/* Used to force a border model for a node */
-.cm-force-border {
-  padding-right: 0.1px;
-}
-
-@media print {
-  /* Hide the cursor when printing */
-  .CodeMirror div.CodeMirror-cursors {
-    visibility: hidden;
-  }
-}
-/* See issue #2901 */
-.cm-tab-wrap-hack:after {
-  content: "";
-}
-
-/* Help users use markselection to safely style text background */
-span.CodeMirror-selectedtext {
-  background: none;
-}
-
 :root {
   /* ========== 尺寸系统 ========== */
   --spacing-xs: 4px;
@@ -520,7 +20,7 @@ span.CodeMirror-selectedtext {
   --shadow-lg: 0px 12px 32px rgba(0, 0, 0, 0.1), 0px 8px 16px rgba(0, 0, 0, 0.05);
   /* ========== 字体系统 ========== */
   --font-family-sans: "Helvetica Neue", Arial, "Hiragino Sans GB", "STHeiti", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
-  --font-family-mono: "Menlo", "Liberation Mono", "Consolas", "DejaVu Sans Mono", "Ubuntu Mono", "Courier New", "andale mono", "lucida console", monospace;
+  --font-family-mono: 'Menlo', 'Liberation Mono', 'Consolas', 'DejaVu Sans Mono', 'Ubuntu Mono', 'Courier New', 'andale mono', 'lucida console', monospace;
   --font-size-xs: 12px;
   --font-size-sm: 14px;
   --font-size-md: 16px;
@@ -607,6 +107,7 @@ span.CodeMirror-selectedtext {
   --toolbar-shadow: var(--shadow-sm);
   --toolbar-split-color: var(--base-border-color);
   --toolbar-min-height: 48px;
+  --sidebar-list-height: 120px;
   --toolbar-btn-color: #3f4a56;
   --toolbar-btn-bg: transparent;
   --toolbar-btn-hover-color: var(--primary-color);
@@ -643,7 +144,7 @@ span.CodeMirror-selectedtext {
   --editor-quote-color: var(--oc-blue-6);
   --editor-string-color: var(--base-font-color);
   --editor-link-color: var(--oc-blue-6);
-  --editor-url-bg-color: #d7e6fe;
+  --editor-url-color: #d7e6fe;
   --editor-v2-color: var(--primary-color);
   --editor-v3-color: var(--secondary-color);
   --editor-keyword-color: var(--base-font-color);
@@ -693,6 +194,12 @@ span.CodeMirror-selectedtext {
   --accordion-body-bg: var(--base-previewer-bg);
   --accordion-body-color: var(--base-font-color);
   --accordion-body-border: var(--base-border-color);
+  /* ========== Mermaid 源码工具栏 ========== */
+  --mermaid-toolbar-switch-bg: rgba(128, 128, 128, 0.12);
+  --mermaid-toolbar-slider-bg: rgba(255, 255, 255, 0.85);
+  --mermaid-toolbar-tab-color: inherit;
+  --mermaid-toolbar-tab-active-color: #333;
+  --mermaid-container-border: rgba(128, 128, 128, 0.2);
   /* ========== 其余单个组件 ========== */
   --drag-border-color: #ebedee;
 }
@@ -1378,12 +885,18 @@ span.CodeMirror-selectedtext {
   content: "\ea92";
 }
 
+.ch-icon-main-theme:before {
+  content: "\ea94";
+}
+
+.ch-icon-code-theme:before {
+  content: "\ea95";
+}
+
 .cherry-markdown {
   word-break: break-all;
   color: var(--md-paragraph-color);
   background-color: var(--base-previewer-bg);
-  /* Inline code */
-  /* 数学表达式展示 */
 }
 .cherry-markdown h1,
 .cherry-markdown h2,
@@ -1575,6 +1088,114 @@ span.CodeMirror-selectedtext {
   overflow-x: auto;
   margin: var(--spacing-lg) 0;
 }
+.cherry-markdown figure[data-type=mermaid] {
+  overflow: hidden;
+  width: fit-content;
+  max-width: 100%;
+}
+.cherry-markdown figure[data-type=mermaid] svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+.cherry-markdown figure[data-type=mermaid][style*=width] svg {
+  width: 100% !important;
+  height: 100% !important;
+}
+.cherry-markdown figure[data-type=mermaid].cherry-mermaid-align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+.cherry-markdown figure[data-type=mermaid].cherry-mermaid-align-right {
+  margin-left: auto;
+  margin-right: 0;
+}
+.cherry-markdown figure[data-type=mermaid].cherry-mermaid-align-left {
+  margin-left: 0;
+  margin-right: auto;
+}
+.cherry-markdown figure[data-type=mermaid].cherry-mermaid-align-float-left {
+  float: left;
+  margin-left: 0;
+  margin-right: var(--spacing-lg);
+}
+.cherry-markdown figure[data-type=mermaid].cherry-mermaid-align-float-right {
+  float: right;
+  margin-left: var(--spacing-lg);
+  margin-right: 0;
+}
+.cherry-markdown figure[data-type=mermaid] .cherry-mermaid-source-toolbar {
+  height: 45px;
+  line-height: 45px;
+  position: relative;
+  background-color: transparent;
+  backdrop-filter: brightness(0.96);
+  border-radius: 4px 4px 0 0;
+}
+.cherry-markdown figure[data-type=mermaid] .cherry-mermaid-source-toolbar-switch {
+  position: absolute;
+  left: 10px;
+  margin-top: 5px;
+  width: 127px;
+  height: 35px;
+  line-height: 35px;
+  background-color: var(--mermaid-toolbar-switch-bg);
+  border-radius: 8px;
+}
+.cherry-markdown figure[data-type=mermaid] .cherry-mermaid-source-toolbar-tab {
+  position: absolute;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  width: 60px;
+  box-sizing: border-box;
+  top: 2px;
+  z-index: 2;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--mermaid-toolbar-tab-color);
+  user-select: none;
+  white-space: nowrap;
+}
+.cherry-markdown figure[data-type=mermaid] .cherry-mermaid-source-toolbar-tab:first-child {
+  left: 2px;
+}
+.cherry-markdown figure[data-type=mermaid] .cherry-mermaid-source-toolbar-tab:nth-child(2) {
+  left: 65px;
+}
+.cherry-markdown figure[data-type=mermaid] .cherry-mermaid-source-toolbar-tab.active {
+  color: var(--mermaid-toolbar-tab-active-color);
+}
+.cherry-markdown figure[data-type=mermaid] .cherry-mermaid-source-toolbar-slider {
+  position: absolute;
+  border-radius: 8px;
+  background-color: var(--mermaid-toolbar-slider-bg);
+  height: 30px;
+  left: 2px;
+  top: 2px;
+  width: 60px;
+  z-index: 1;
+  transition: left 0.3s;
+}
+.cherry-markdown figure[data-type=mermaid] .cherry-mermaid-source-toolbar-panel {
+  display: none;
+  width: 100%;
+}
+.cherry-markdown figure[data-type=mermaid] .cherry-mermaid-source-toolbar-panel.active {
+  display: block;
+}
+.cherry-markdown figure[data-type=mermaid] .cherry-mermaid-source-toolbar-panel[data-mode=source] [data-type=codeBlock] {
+  margin: 0;
+  border-radius: 0;
+}
+.cherry-markdown figure[data-type=mermaid]:has(.cherry-mermaid-source-toolbar) {
+  width: auto;
+  max-width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--mermaid-container-border);
+  border-radius: 4px;
+}
 .cherry-markdown p,
 .cherry-markdown pre,
 .cherry-markdown blockquote,
@@ -1632,6 +1253,9 @@ span.CodeMirror-selectedtext {
 }
 .cherry-markdown div[data-type=codeBlock] > pre code[class*=language-] .code-line:last-child {
   margin-bottom: 0;
+}
+.cherry-markdown {
+  /* Inline code */
 }
 .cherry-markdown :not(pre) > code {
   padding: 0.1em;
@@ -1753,17 +1377,17 @@ span.CodeMirror-selectedtext {
 .cherry-markdown .check-list-item .ch-icon {
   margin: 0 6px 0 -20px;
 }
-.cherry-markdown .footnote:not(a) {
-  padding-top: 20px;
-  border-top: 1px solid var(--md-hr-border);
-  margin-top: 50px;
-}
 .cherry-markdown .footnote:not(a) .footnote-title {
   font-size: 20px;
   margin-top: -38px;
   background-color: var(--md-inline-code-bg);
   width: 60px;
   margin-bottom: var(--spacing-lg);
+}
+.cherry-markdown .footnote:not(a) {
+  padding-top: 20px;
+  border-top: 1px solid var(--md-hr-border);
+  margin-top: 50px;
 }
 .cherry-markdown .footnote:not(a) .one-footnote {
   color: var(--md-paragraph-color);
@@ -1787,6 +1411,9 @@ span.CodeMirror-selectedtext {
   white-space: nowrap;
   background-color: var(--md-inline-code-bg);
 }
+.cherry-markdown {
+  /* 数学表达式展示 */
+}
 .cherry-markdown mjx-assistive-mml {
   position: absolute;
   top: 0;
@@ -1794,9 +1421,6 @@ span.CodeMirror-selectedtext {
   clip: rect(1px, 1px, 1px, 1px);
   padding: 1px 0 0 0;
   border: 0;
-}
-.cherry-markdown.head-num {
-  counter-reset: level1;
 }
 .cherry-markdown.head-num h1 .anchor:before,
 .cherry-markdown.head-num h2 .anchor:before,
@@ -1808,6 +1432,9 @@ span.CodeMirror-selectedtext {
   font-size: inherit;
   vertical-align: inherit;
   padding-right: 10px;
+}
+.cherry-markdown.head-num {
+  counter-reset: level1;
 }
 .cherry-markdown.head-num h1 {
   counter-reset: level2;
@@ -1863,8 +1490,6 @@ div[data-type=codeBlock] {
    * Based on https://github.com/chriskempson/tomorrow-theme
    * @author Rose Pritchard
    */
-  /* Code blocks */
-  /* Inline code */
 }
 div[data-type=codeBlock] code[class*=language-],
 div[data-type=codeBlock] pre[class*=language-] {
@@ -1886,6 +1511,9 @@ div[data-type=codeBlock] pre[class*=language-] {
   -ms-hyphens: none;
   hyphens: none;
 }
+div[data-type=codeBlock] {
+  /* Code blocks */
+}
 div[data-type=codeBlock] pre[class*=language-] {
   padding: 1em;
   margin: 0.5em 0;
@@ -1894,6 +1522,9 @@ div[data-type=codeBlock] pre[class*=language-] {
 div[data-type=codeBlock] :not(pre) > code[class*=language-],
 div[data-type=codeBlock] pre[class*=language-] {
   background: #2d2d2d;
+}
+div[data-type=codeBlock] {
+  /* Inline code */
 }
 div[data-type=codeBlock] :not(pre) > code[class*=language-] {
   padding: 0.1em;
@@ -1974,8 +1605,6 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
    * Based on dabblet (http://dabblet.com)
    * @author Lea Verou
    */
-  /* Code blocks */
-  /* Inline code */
 }
 [data-code-block-theme=default] div[data-type=codeBlock] code[class*=language-],
 [data-code-block-theme=default] div[data-type=codeBlock] pre[class*=language-] {
@@ -2014,6 +1643,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
     text-shadow: none;
   }
 }
+[data-code-block-theme=default] div[data-type=codeBlock] {
+  /* Code blocks */
+}
 [data-code-block-theme=default] div[data-type=codeBlock] pre[class*=language-] {
   padding: 1em;
   margin: 0.5em 0;
@@ -2022,6 +1654,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=default] div[data-type=codeBlock] :not(pre) > code[class*=language-],
 [data-code-block-theme=default] div[data-type=codeBlock] pre[class*=language-] {
   background: #f5f2f0;
+}
+[data-code-block-theme=default] div[data-type=codeBlock] {
+  /* Inline code */
 }
 [data-code-block-theme=default] div[data-type=codeBlock] :not(pre) > code[class*=language-] {
   padding: 0.1em;
@@ -2098,8 +1733,6 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
    * Based on the slides of the talk “/Reg(exp){2}lained/”
    * @author Lea Verou
    */
-  /* Code blocks */
-  /* Inline code */
 }
 [data-code-block-theme=dark] div[data-type=codeBlock] code[class*=language-],
 [data-code-block-theme=dark] div[data-type=codeBlock] pre[class*=language-] {
@@ -2132,6 +1765,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=dark] div[data-type=codeBlock] :not(pre) > code[class*=language-] {
   background: hsl(30, 20%, 25%);
 }
+[data-code-block-theme=dark] div[data-type=codeBlock] {
+  /* Code blocks */
+}
 [data-code-block-theme=dark] div[data-type=codeBlock] pre[class*=language-] {
   padding: 1em;
   margin: 0.5em 0;
@@ -2139,6 +1775,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   border: 0.3em solid hsl(30, 20%, 40%);
   border-radius: 0.5em;
   box-shadow: 1px 1px 0.5em black inset;
+}
+[data-code-block-theme=dark] div[data-type=codeBlock] {
+  /* Inline code */
 }
 [data-code-block-theme=dark] div[data-type=codeBlock] :not(pre) > code[class*=language-] {
   padding: 0.15em 0.2em 0.05em;
@@ -2234,44 +1873,6 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
    * --syntax-gutter-background-color-selected: hsl(220, 13%, 26%);
    * --syntax-cursor-line: hsla(220, 100%, 80%, 0.04);
    */
-  /* Selection */
-  /* Code blocks */
-  /* Inline code */
-  /* Print */
-  /* HTML overrides */
-  /* CSS overrides */
-  /* JS overrides */
-  /* JSON overrides */
-  /* MD overrides */
-  /* General */
-  /* Plugin overrides */
-  /* Selectors should have higher specificity than those in the plugins' default stylesheets */
-  /* Show Invisibles plugin overrides */
-  /* Toolbar plugin overrides */
-  /* Space out all buttons and move them away from the right edge of the code block */
-  /* Styling the buttons */
-  /* Line Highlight plugin overrides */
-  /* The highlighted line itself */
-  /* Default line numbers in Line Highlight plugin */
-  /* Hovering over a linkable line number (in the gutter area) */
-  /* Requires Line Numbers plugin as well */
-  /* Line Numbers and Command Line plugins overrides */
-  /* Line separating gutter from coding area */
-  /* Stuff in the gutter */
-  /* Match Braces plugin overrides */
-  /* Note: Outline colour is inherited from the braces */
-  /* Diff Highlight plugin overrides */
-  /* Taken from https://github.com/atom/github/blob/master/styles/variables.less */
-  /* Previewers plugin overrides */
-  /* Based on https://github.com/atom-community/atom-ide-datatip/blob/master/styles/atom-ide-datatips.less and https://github.com/atom/atom/blob/master/packages/one-dark-ui */
-  /* Border around popup */
-  /* Angle and time should remain as circles and are hence not included */
-  /* Triangles pointing to the code */
-  /* Background colour within the popup */
-  /* For angle, this is the positive area (eg. 90deg will display one quadrant in this colour) */
-  /* For time, this is the alternate colour */
-  /* Stroke colours of the handle, direction point, and vector itself */
-  /* Fill colour of the handle */
 }
 [data-code-block-theme=one-dark] div[data-type=codeBlock] code[class*=language-],
 [data-code-block-theme=one-dark] div[data-type=codeBlock] pre[class*=language-] {
@@ -2293,6 +1894,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   -ms-hyphens: none;
   hyphens: none;
 }
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* Selection */
+}
 [data-code-block-theme=one-dark] div[data-type=codeBlock] code[class*=language-]::-moz-selection,
 [data-code-block-theme=one-dark] div[data-type=codeBlock] code[class*=language-] *::-moz-selection,
 [data-code-block-theme=one-dark] div[data-type=codeBlock] pre[class*=language-] *::-moz-selection {
@@ -2307,16 +1911,25 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   color: inherit;
   text-shadow: none;
 }
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* Code blocks */
+}
 [data-code-block-theme=one-dark] div[data-type=codeBlock] pre[class*=language-] {
   padding: 1em;
   margin: 0.5em 0;
   overflow: auto;
   border-radius: 0.3em;
 }
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* Inline code */
+}
 [data-code-block-theme=one-dark] div[data-type=codeBlock] :not(pre) > code[class*=language-] {
   padding: 0.2em 0.3em;
   border-radius: 0.3em;
   white-space: normal;
+}
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* Print */
 }
 @media print {
   [data-code-block-theme=one-dark] div[data-type=codeBlock] code[class*=language-],
@@ -2370,9 +1983,15 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .token.url {
   color: hsl(187, 47%, 55%);
 }
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* HTML overrides */
+}
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .token.attr-value > .token.punctuation.attr-equals,
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .token.special-attr > .token.attr-value > .token.value.css {
   color: hsl(220, 14%, 71%);
+}
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* CSS overrides */
 }
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .language-css .token.selector {
   color: hsl(355, 65%, 65%);
@@ -2391,17 +2010,26 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .language-css .token.atrule .token.rule {
   color: hsl(286, 60%, 67%);
 }
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* JS overrides */
+}
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .language-javascript .token.operator {
   color: hsl(286, 60%, 67%);
 }
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .language-javascript .token.template-string > .token.interpolation > .token.interpolation-punctuation.punctuation {
   color: hsl(5, 48%, 51%);
 }
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* JSON overrides */
+}
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .language-json .token.operator {
   color: hsl(220, 14%, 71%);
 }
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .language-json .token.null.keyword {
   color: hsl(29, 54%, 61%);
+}
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* MD overrides */
 }
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .language-markdown .token.url,
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .language-markdown .token.url > .token.operator,
@@ -2435,6 +2063,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .language-markdown .token.title.important > .token.punctuation {
   color: hsl(355, 65%, 65%);
 }
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* General */
+}
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .token.bold {
   font-weight: bold;
 }
@@ -2448,6 +2079,11 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .token.namespace {
   opacity: 0.8;
 }
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* Plugin overrides */
+  /* Selectors should have higher specificity than those in the plugins' default stylesheets */
+  /* Show Invisibles plugin overrides */
+}
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .token.token.tab:not(:empty):before,
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .token.token.cr:before,
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .token.token.lf:before,
@@ -2455,8 +2091,15 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   color: hsla(220, 14%, 71%, 0.15);
   text-shadow: none;
 }
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* Toolbar plugin overrides */
+  /* Space out all buttons and move them away from the right edge of the code block */
+}
 [data-code-block-theme=one-dark] div[data-type=codeBlock] div.code-toolbar > .toolbar.toolbar > .toolbar-item {
   margin-right: 0.4em;
+}
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* Styling the buttons */
 }
 [data-code-block-theme=one-dark] div[data-type=codeBlock] div.code-toolbar > .toolbar.toolbar > .toolbar-item > button,
 [data-code-block-theme=one-dark] div[data-type=codeBlock] div.code-toolbar > .toolbar.toolbar > .toolbar-item > a,
@@ -2475,8 +2118,15 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   background: hsl(220, 13%, 28%);
   color: hsl(220, 14%, 71%);
 }
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* Line Highlight plugin overrides */
+  /* The highlighted line itself */
+}
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .line-highlight.line-highlight {
   background: hsla(220, 100%, 80%, 0.04);
+}
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* Default line numbers in Line Highlight plugin */
 }
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .line-highlight.line-highlight:before,
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .line-highlight.line-highlight[data-end]:after {
@@ -2486,16 +2136,31 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   border-radius: 0.3em;
   box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.2); /* same as Toolbar plugin default */
 }
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* Hovering over a linkable line number (in the gutter area) */
+  /* Requires Line Numbers plugin as well */
+}
 [data-code-block-theme=one-dark] div[data-type=codeBlock] pre[id].linkable-line-numbers.linkable-line-numbers span.line-numbers-rows > span:hover:before {
   background-color: hsla(220, 100%, 80%, 0.04);
+}
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* Line Numbers and Command Line plugins overrides */
+  /* Line separating gutter from coding area */
 }
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .line-numbers.line-numbers .line-numbers-rows,
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .command-line .command-line-prompt {
   border-right-color: hsla(220, 14%, 71%, 0.15);
 }
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* Stuff in the gutter */
+}
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .line-numbers .line-numbers-rows > span:before,
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .command-line .command-line-prompt > span:before {
   color: hsl(220, 14%, 45%);
+}
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* Match Braces plugin overrides */
+  /* Note: Outline colour is inherited from the braces */
 }
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .rainbow-braces .token.token.punctuation.brace-level-1,
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .rainbow-braces .token.token.punctuation.brace-level-5,
@@ -2516,6 +2181,10 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .rainbow-braces .token.token.punctuation.brace-level-8,
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .rainbow-braces .token.token.punctuation.brace-level-12 {
   color: hsl(286, 60%, 67%);
+}
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* Diff Highlight plugin overrides */
+  /* Taken from https://github.com/atom/github/blob/master/styles/variables.less */
 }
 [data-code-block-theme=one-dark] div[data-type=codeBlock] pre.diff-highlight > code .token.token.deleted:not(.prefix),
 [data-code-block-theme=one-dark] div[data-type=codeBlock] pre > code.diff-highlight .token.token.deleted:not(.prefix) {
@@ -2549,14 +2218,25 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=one-dark] div[data-type=codeBlock] pre > code.diff-highlight .token.token.inserted:not(.prefix) *::selection {
   background-color: hsla(135, 73%, 55%, 0.25);
 }
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* Previewers plugin overrides */
+  /* Based on https://github.com/atom-community/atom-ide-datatip/blob/master/styles/atom-ide-datatips.less and https://github.com/atom/atom/blob/master/packages/one-dark-ui */
+  /* Border around popup */
+}
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .prism-previewer.prism-previewer:before,
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .prism-previewer-gradient.prism-previewer-gradient div {
   border-color: hsl(224, 13%, 17%);
+}
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* Angle and time should remain as circles and are hence not included */
 }
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .prism-previewer-color.prism-previewer-color:before,
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .prism-previewer-gradient.prism-previewer-gradient div,
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .prism-previewer-easing.prism-previewer-easing:before {
   border-radius: 0.3em;
+}
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* Triangles pointing to the code */
 }
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .prism-previewer.prism-previewer:after {
   border-top-color: hsl(224, 13%, 17%);
@@ -2564,20 +2244,33 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .prism-previewer-flipped.prism-previewer-flipped.after {
   border-bottom-color: hsl(224, 13%, 17%);
 }
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* Background colour within the popup */
+}
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .prism-previewer-angle.prism-previewer-angle:before,
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .prism-previewer-time.prism-previewer-time:before,
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .prism-previewer-easing.prism-previewer-easing {
   background: hsl(219, 13%, 22%);
+}
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* For angle, this is the positive area (eg. 90deg will display one quadrant in this colour) */
+  /* For time, this is the alternate colour */
 }
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .prism-previewer-angle.prism-previewer-angle circle,
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .prism-previewer-time.prism-previewer-time circle {
   stroke: hsl(220, 14%, 71%);
   stroke-opacity: 1;
 }
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* Stroke colours of the handle, direction point, and vector itself */
+}
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .prism-previewer-easing.prism-previewer-easing circle,
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .prism-previewer-easing.prism-previewer-easing path,
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .prism-previewer-easing.prism-previewer-easing line {
   stroke: hsl(220, 14%, 71%);
+}
+[data-code-block-theme=one-dark] div[data-type=codeBlock] {
+  /* Fill colour of the handle */
 }
 [data-code-block-theme=one-dark] div[data-type=codeBlock] .prism-previewer-easing.prism-previewer-easing circle {
   fill: transparent;
@@ -2611,43 +2304,6 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
    * --syntax-gutter-background-color-selected: hsl(230, 1%, 90%);
    * --syntax-cursor-line: hsla(230, 8%, 24%, 0.05);
    */
-  /* Selection */
-  /* Code blocks */
-  /* Inline code */
-  /* HTML overrides */
-  /* CSS overrides */
-  /* JS overrides */
-  /* JSON overrides */
-  /* MD overrides */
-  /* General */
-  /* Plugin overrides */
-  /* Selectors should have higher specificity than those in the plugins' default stylesheets */
-  /* Show Invisibles plugin overrides */
-  /* Toolbar plugin overrides */
-  /* Space out all buttons and move them away from the right edge of the code block */
-  /* Styling the buttons */
-  /* Line Highlight plugin overrides */
-  /* The highlighted line itself */
-  /* Default line numbers in Line Highlight plugin */
-  /* Hovering over a linkable line number (in the gutter area) */
-  /* Requires Line Numbers plugin as well */
-  /* Line Numbers and Command Line plugins overrides */
-  /* Line separating gutter from coding area */
-  /* Stuff in the gutter */
-  /* Match Braces plugin overrides */
-  /* Note: Outline colour is inherited from the braces */
-  /* Diff Highlight plugin overrides */
-  /* Taken from https://github.com/atom/github/blob/master/styles/variables.less */
-  /* Previewers plugin overrides */
-  /* Based on https://github.com/atom-community/atom-ide-datatip/blob/master/styles/atom-ide-datatips.less and https://github.com/atom/atom/blob/master/packages/one-light-ui */
-  /* Border around popup */
-  /* Angle and time should remain as circles and are hence not included */
-  /* Triangles pointing to the code */
-  /* Background colour within the popup */
-  /* For angle, this is the positive area (eg. 90deg will display one quadrant in this colour) */
-  /* For time, this is the alternate colour */
-  /* Stroke colours of the handle, direction point, and vector itself */
-  /* Fill colour of the handle */
 }
 [data-code-block-theme=one-light] div[data-type=codeBlock] code[class*=language-],
 [data-code-block-theme=one-light] div[data-type=codeBlock] pre[class*=language-] {
@@ -2668,6 +2324,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   -ms-hyphens: none;
   hyphens: none;
 }
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* Selection */
+}
 [data-code-block-theme=one-light] div[data-type=codeBlock] code[class*=language-]::-moz-selection,
 [data-code-block-theme=one-light] div[data-type=codeBlock] code[class*=language-] *::-moz-selection,
 [data-code-block-theme=one-light] div[data-type=codeBlock] pre[class*=language-] *::-moz-selection {
@@ -2680,11 +2339,17 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   background: hsl(230, 1%, 90%);
   color: inherit;
 }
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* Code blocks */
+}
 [data-code-block-theme=one-light] div[data-type=codeBlock] pre[class*=language-] {
   padding: 1em;
   margin: 0.5em 0;
   overflow: auto;
   border-radius: 0.3em;
+}
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* Inline code */
 }
 [data-code-block-theme=one-light] div[data-type=codeBlock] :not(pre) > code[class*=language-] {
   padding: 0.2em 0.3em;
@@ -2737,9 +2402,15 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=one-light] div[data-type=codeBlock] .token.url {
   color: hsl(198, 99%, 37%);
 }
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* HTML overrides */
+}
 [data-code-block-theme=one-light] div[data-type=codeBlock] .token.attr-value > .token.punctuation.attr-equals,
 [data-code-block-theme=one-light] div[data-type=codeBlock] .token.special-attr > .token.attr-value > .token.value.css {
   color: hsl(230, 8%, 24%);
+}
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* CSS overrides */
 }
 [data-code-block-theme=one-light] div[data-type=codeBlock] .language-css .token.selector {
   color: hsl(5, 74%, 59%);
@@ -2758,17 +2429,26 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=one-light] div[data-type=codeBlock] .language-css .token.atrule .token.rule {
   color: hsl(301, 63%, 40%);
 }
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* JS overrides */
+}
 [data-code-block-theme=one-light] div[data-type=codeBlock] .language-javascript .token.operator {
   color: hsl(301, 63%, 40%);
 }
 [data-code-block-theme=one-light] div[data-type=codeBlock] .language-javascript .token.template-string > .token.interpolation > .token.interpolation-punctuation.punctuation {
   color: hsl(344, 84%, 43%);
 }
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* JSON overrides */
+}
 [data-code-block-theme=one-light] div[data-type=codeBlock] .language-json .token.operator {
   color: hsl(230, 8%, 24%);
 }
 [data-code-block-theme=one-light] div[data-type=codeBlock] .language-json .token.null.keyword {
   color: hsl(35, 99%, 36%);
+}
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* MD overrides */
 }
 [data-code-block-theme=one-light] div[data-type=codeBlock] .language-markdown .token.url,
 [data-code-block-theme=one-light] div[data-type=codeBlock] .language-markdown .token.url > .token.operator,
@@ -2802,6 +2482,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=one-light] div[data-type=codeBlock] .language-markdown .token.title.important > .token.punctuation {
   color: hsl(5, 74%, 59%);
 }
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* General */
+}
 [data-code-block-theme=one-light] div[data-type=codeBlock] .token.bold {
   font-weight: bold;
 }
@@ -2815,14 +2498,26 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=one-light] div[data-type=codeBlock] .token.namespace {
   opacity: 0.8;
 }
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* Plugin overrides */
+  /* Selectors should have higher specificity than those in the plugins' default stylesheets */
+  /* Show Invisibles plugin overrides */
+}
 [data-code-block-theme=one-light] div[data-type=codeBlock] .token.token.tab:not(:empty):before,
 [data-code-block-theme=one-light] div[data-type=codeBlock] .token.token.cr:before,
 [data-code-block-theme=one-light] div[data-type=codeBlock] .token.token.lf:before,
 [data-code-block-theme=one-light] div[data-type=codeBlock] .token.token.space:before {
   color: hsla(230, 8%, 24%, 0.2);
 }
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* Toolbar plugin overrides */
+  /* Space out all buttons and move them away from the right edge of the code block */
+}
 [data-code-block-theme=one-light] div[data-type=codeBlock] div.code-toolbar > .toolbar.toolbar > .toolbar-item {
   margin-right: 0.4em;
+}
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* Styling the buttons */
 }
 [data-code-block-theme=one-light] div[data-type=codeBlock] div.code-toolbar > .toolbar.toolbar > .toolbar-item > button,
 [data-code-block-theme=one-light] div[data-type=codeBlock] div.code-toolbar > .toolbar.toolbar > .toolbar-item > a,
@@ -2841,8 +2536,15 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   background: hsl(230, 1%, 78%); /* custom: darken(--syntax-bg, 20%) */
   color: hsl(230, 8%, 24%);
 }
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* Line Highlight plugin overrides */
+  /* The highlighted line itself */
+}
 [data-code-block-theme=one-light] div[data-type=codeBlock] .line-highlight.line-highlight {
   background: hsla(230, 8%, 24%, 0.05);
+}
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* Default line numbers in Line Highlight plugin */
 }
 [data-code-block-theme=one-light] div[data-type=codeBlock] .line-highlight.line-highlight:before,
 [data-code-block-theme=one-light] div[data-type=codeBlock] .line-highlight.line-highlight[data-end]:after {
@@ -2852,16 +2554,31 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   border-radius: 0.3em;
   box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.2); /* same as Toolbar plugin default */
 }
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* Hovering over a linkable line number (in the gutter area) */
+  /* Requires Line Numbers plugin as well */
+}
 [data-code-block-theme=one-light] div[data-type=codeBlock] pre[id].linkable-line-numbers.linkable-line-numbers span.line-numbers-rows > span:hover:before {
   background-color: hsla(230, 8%, 24%, 0.05);
+}
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* Line Numbers and Command Line plugins overrides */
+  /* Line separating gutter from coding area */
 }
 [data-code-block-theme=one-light] div[data-type=codeBlock] .line-numbers.line-numbers .line-numbers-rows,
 [data-code-block-theme=one-light] div[data-type=codeBlock] .command-line .command-line-prompt {
   border-right-color: hsla(230, 8%, 24%, 0.2);
 }
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* Stuff in the gutter */
+}
 [data-code-block-theme=one-light] div[data-type=codeBlock] .line-numbers .line-numbers-rows > span:before,
 [data-code-block-theme=one-light] div[data-type=codeBlock] .command-line .command-line-prompt > span:before {
   color: hsl(230, 1%, 62%);
+}
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* Match Braces plugin overrides */
+  /* Note: Outline colour is inherited from the braces */
 }
 [data-code-block-theme=one-light] div[data-type=codeBlock] .rainbow-braces .token.token.punctuation.brace-level-1,
 [data-code-block-theme=one-light] div[data-type=codeBlock] .rainbow-braces .token.token.punctuation.brace-level-5,
@@ -2882,6 +2599,10 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=one-light] div[data-type=codeBlock] .rainbow-braces .token.token.punctuation.brace-level-8,
 [data-code-block-theme=one-light] div[data-type=codeBlock] .rainbow-braces .token.token.punctuation.brace-level-12 {
   color: hsl(301, 63%, 40%);
+}
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* Diff Highlight plugin overrides */
+  /* Taken from https://github.com/atom/github/blob/master/styles/variables.less */
 }
 [data-code-block-theme=one-light] div[data-type=codeBlock] pre.diff-highlight > code .token.token.deleted:not(.prefix),
 [data-code-block-theme=one-light] div[data-type=codeBlock] pre > code.diff-highlight .token.token.deleted:not(.prefix) {
@@ -2915,14 +2636,25 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=one-light] div[data-type=codeBlock] pre > code.diff-highlight .token.token.inserted:not(.prefix) *::selection {
   background-color: hsla(135, 73%, 55%, 0.25);
 }
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* Previewers plugin overrides */
+  /* Based on https://github.com/atom-community/atom-ide-datatip/blob/master/styles/atom-ide-datatips.less and https://github.com/atom/atom/blob/master/packages/one-light-ui */
+  /* Border around popup */
+}
 [data-code-block-theme=one-light] div[data-type=codeBlock] .prism-previewer.prism-previewer:before,
 [data-code-block-theme=one-light] div[data-type=codeBlock] .prism-previewer-gradient.prism-previewer-gradient div {
   border-color: rgb(242, 242, 242);
+}
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* Angle and time should remain as circles and are hence not included */
 }
 [data-code-block-theme=one-light] div[data-type=codeBlock] .prism-previewer-color.prism-previewer-color:before,
 [data-code-block-theme=one-light] div[data-type=codeBlock] .prism-previewer-gradient.prism-previewer-gradient div,
 [data-code-block-theme=one-light] div[data-type=codeBlock] .prism-previewer-easing.prism-previewer-easing:before {
   border-radius: 0.3em;
+}
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* Triangles pointing to the code */
 }
 [data-code-block-theme=one-light] div[data-type=codeBlock] .prism-previewer.prism-previewer:after {
   border-top-color: rgb(242, 242, 242);
@@ -2930,34 +2662,36 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=one-light] div[data-type=codeBlock] .prism-previewer-flipped.prism-previewer-flipped.after {
   border-bottom-color: rgb(242, 242, 242);
 }
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* Background colour within the popup */
+}
 [data-code-block-theme=one-light] div[data-type=codeBlock] .prism-previewer-angle.prism-previewer-angle:before,
 [data-code-block-theme=one-light] div[data-type=codeBlock] .prism-previewer-time.prism-previewer-time:before,
 [data-code-block-theme=one-light] div[data-type=codeBlock] .prism-previewer-easing.prism-previewer-easing {
   background: hsl(0, 0%, 100%);
+}
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* For angle, this is the positive area (eg. 90deg will display one quadrant in this colour) */
+  /* For time, this is the alternate colour */
 }
 [data-code-block-theme=one-light] div[data-type=codeBlock] .prism-previewer-angle.prism-previewer-angle circle,
 [data-code-block-theme=one-light] div[data-type=codeBlock] .prism-previewer-time.prism-previewer-time circle {
   stroke: hsl(230, 8%, 24%);
   stroke-opacity: 1;
 }
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* Stroke colours of the handle, direction point, and vector itself */
+}
 [data-code-block-theme=one-light] div[data-type=codeBlock] .prism-previewer-easing.prism-previewer-easing circle,
 [data-code-block-theme=one-light] div[data-type=codeBlock] .prism-previewer-easing.prism-previewer-easing path,
 [data-code-block-theme=one-light] div[data-type=codeBlock] .prism-previewer-easing.prism-previewer-easing line {
   stroke: hsl(230, 8%, 24%);
 }
+[data-code-block-theme=one-light] div[data-type=codeBlock] {
+  /* Fill colour of the handle */
+}
 [data-code-block-theme=one-light] div[data-type=codeBlock] .prism-previewer-easing.prism-previewer-easing circle {
   fill: transparent;
-}
-[data-code-block-theme=vs-dark] div[data-type=codeBlock] {
-  /*********************************************************
-  * Tokens
-  */
-  /*********************************************************
-  * Language Specific
-  */
-  /*********************************************************
-  * Line highlighting
-  */
 }
 [data-code-block-theme=vs-dark] div[data-type=codeBlock] pre[class*=language-],
 [data-code-block-theme=vs-dark] div[data-type=codeBlock] code[class*=language-] {
@@ -3003,6 +2737,11 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   border-radius: 0.3em;
   color: #db4c69;
   background: #1e1e1e;
+}
+[data-code-block-theme=vs-dark] div[data-type=codeBlock] {
+  /*********************************************************
+  * Tokens
+  */
 }
 [data-code-block-theme=vs-dark] div[data-type=codeBlock] .namespace {
   opacity: 0.7;
@@ -3144,6 +2883,11 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=vs-dark] div[data-type=codeBlock] .token.namespace {
   color: #4ec9b0;
 }
+[data-code-block-theme=vs-dark] div[data-type=codeBlock] {
+  /*********************************************************
+  * Language Specific
+  */
+}
 [data-code-block-theme=vs-dark] div[data-type=codeBlock] pre[class*=language-javascript],
 [data-code-block-theme=vs-dark] div[data-type=codeBlock] code[class*=language-javascript],
 [data-code-block-theme=vs-dark] div[data-type=codeBlock] pre[class*=language-jsx],
@@ -3168,6 +2912,11 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=vs-dark] div[data-type=codeBlock] .language-html .token.punctuation {
   color: #808080;
 }
+[data-code-block-theme=vs-dark] div[data-type=codeBlock] {
+  /*********************************************************
+  * Line highlighting
+  */
+}
 [data-code-block-theme=vs-dark] div[data-type=codeBlock] pre[class*=language-] > code[class*=language-] {
   position: relative;
   z-index: 1;
@@ -3182,14 +2931,6 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
    * VS theme by Andrew Lock (https://andrewlock.net)
    * Inspired by Visual Studio syntax coloring
    */
-  /* Code blocks */
-  /* Inline code */
-  /* overrides color-values for the Line Numbers plugin
-   * http://prismjs.com/plugins/line-numbers/
-   */
-  /* overrides color-values for the Line Highlight plugin
-  * http://prismjs.com/plugins/line-highlight/
-  */
 }
 [data-code-block-theme=vs-light] div[data-type=codeBlock] code[class*=language-],
 [data-code-block-theme=vs-light] div[data-type=codeBlock] pre[class*=language-] {
@@ -3221,12 +2962,18 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=vs-light] div[data-type=codeBlock] code[class*=language-]::selection, [data-code-block-theme=vs-light] div[data-type=codeBlock] code[class*=language-] ::selection {
   background: #C1DEF1;
 }
+[data-code-block-theme=vs-light] div[data-type=codeBlock] {
+  /* Code blocks */
+}
 [data-code-block-theme=vs-light] div[data-type=codeBlock] pre[class*=language-] {
   padding: 1em;
   margin: 0.5em 0;
   overflow: auto;
   border: 1px solid #dddddd;
   background-color: white;
+}
+[data-code-block-theme=vs-light] div[data-type=codeBlock] {
+  /* Inline code */
 }
 [data-code-block-theme=vs-light] div[data-type=codeBlock] :not(pre) > code[class*=language-] {
   padding: 0.2em;
@@ -3309,11 +3056,21 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   background: #ffff00;
   color: #393A34;
 }
+[data-code-block-theme=vs-light] div[data-type=codeBlock] {
+  /* overrides color-values for the Line Numbers plugin
+   * http://prismjs.com/plugins/line-numbers/
+   */
+}
 [data-code-block-theme=vs-light] div[data-type=codeBlock] .line-numbers.line-numbers .line-numbers-rows {
   border-right-color: #a5a5a5;
 }
 [data-code-block-theme=vs-light] div[data-type=codeBlock] .line-numbers .line-numbers-rows > span:before {
   color: #2B91AF;
+}
+[data-code-block-theme=vs-light] div[data-type=codeBlock] {
+  /* overrides color-values for the Line Highlight plugin
+  * http://prismjs.com/plugins/line-highlight/
+  */
 }
 [data-code-block-theme=vs-light] div[data-type=codeBlock] .line-highlight.line-highlight {
   background: rgba(193, 222, 241, 0.2);
@@ -3328,8 +3085,6 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
    * Loosely based on Monokai textmate theme by http://www.monokai.nl/
    * @author ocodia
    */
-  /* Code blocks */
-  /* Inline code */
 }
 [data-code-block-theme=okaidia] div[data-type=codeBlock] code[class*=language-],
 [data-code-block-theme=okaidia] div[data-type=codeBlock] pre[class*=language-] {
@@ -3352,6 +3107,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   -ms-hyphens: none;
   hyphens: none;
 }
+[data-code-block-theme=okaidia] div[data-type=codeBlock] {
+  /* Code blocks */
+}
 [data-code-block-theme=okaidia] div[data-type=codeBlock] pre[class*=language-] {
   padding: 1em;
   margin: 0.5em 0;
@@ -3361,6 +3119,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=okaidia] div[data-type=codeBlock] :not(pre) > code[class*=language-],
 [data-code-block-theme=okaidia] div[data-type=codeBlock] pre[class*=language-] {
   background: #272822;
+}
+[data-code-block-theme=okaidia] div[data-type=codeBlock] {
+  /* Inline code */
 }
 [data-code-block-theme=okaidia] div[data-type=codeBlock] :not(pre) > code[class*=language-] {
   padding: 0.1em;
@@ -3437,11 +3198,6 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
    * Based (more or less) on the Twilight theme originally of Textmate fame.
    * @author Remy Bach
    */
-  /* Code blocks */
-  /* Text Selection colour */
-  /* Inline code */
-  /* Markup */
-  /* Make the tokens sit above the line highlight so the colours don't look faded. */
 }
 [data-code-block-theme=twilight] div[data-type=codeBlock] code[class*=language-],
 [data-code-block-theme=twilight] div[data-type=codeBlock] pre[class*=language-] {
@@ -3468,6 +3224,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=twilight] div[data-type=codeBlock] :not(pre) > code[class*=language-] {
   background: hsl(0, 0%, 8%); /* #141414 */
 }
+[data-code-block-theme=twilight] div[data-type=codeBlock] {
+  /* Code blocks */
+}
 [data-code-block-theme=twilight] div[data-type=codeBlock] pre[class*=language-] {
   border-radius: 0.5em;
   border: 0.3em solid hsl(0, 0%, 33%); /* #282A2B */
@@ -3484,6 +3243,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   /* Safari */
   background: hsl(200, 4%, 16%); /* #282A2B */
 }
+[data-code-block-theme=twilight] div[data-type=codeBlock] {
+  /* Text Selection colour */
+}
 [data-code-block-theme=twilight] div[data-type=codeBlock] pre[class*=language-]::-moz-selection, [data-code-block-theme=twilight] div[data-type=codeBlock] pre[class*=language-] ::-moz-selection,
 [data-code-block-theme=twilight] div[data-type=codeBlock] code[class*=language-]::-moz-selection, [data-code-block-theme=twilight] div[data-type=codeBlock] code[class*=language-] ::-moz-selection {
   text-shadow: none;
@@ -3493,6 +3255,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=twilight] div[data-type=codeBlock] code[class*=language-]::selection, [data-code-block-theme=twilight] div[data-type=codeBlock] code[class*=language-] ::selection {
   text-shadow: none;
   background: hsla(0, 0%, 93%, 0.15); /* #EDEDED */
+}
+[data-code-block-theme=twilight] div[data-type=codeBlock] {
+  /* Inline code */
 }
 [data-code-block-theme=twilight] div[data-type=codeBlock] :not(pre) > code[class*=language-] {
   border-radius: 0.3em;
@@ -3561,10 +3326,16 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   padding: 1em 0 1em 3em;
   position: relative;
 }
+[data-code-block-theme=twilight] div[data-type=codeBlock] {
+  /* Markup */
+}
 [data-code-block-theme=twilight] div[data-type=codeBlock] .language-markup .token.tag,
 [data-code-block-theme=twilight] div[data-type=codeBlock] .language-markup .token.attr-name,
 [data-code-block-theme=twilight] div[data-type=codeBlock] .language-markup .token.punctuation {
   color: hsl(33, 33%, 52%); /* #AC885B */
+}
+[data-code-block-theme=twilight] div[data-type=codeBlock] {
+  /* Make the tokens sit above the line highlight so the colours don't look faded. */
 }
 [data-code-block-theme=twilight] div[data-type=codeBlock] .token {
   position: relative;
@@ -3615,11 +3386,6 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
    * Based on https://github.com/tshedor/workshop-wp-theme (Example: http://workshop.kansan.com/category/sessions/basics or http://workshop.timshedor.com/category/sessions/basics);
    * @author Tim  Shedor
    */
-  /* Code blocks */
-  /* Margin bottom to accommodate shadow */
-  /* Inline code */
-  /* Plugin styles: Line Numbers */
-  /* Plugin styles: Line Highlight */
 }
 [data-code-block-theme=coy] div[data-type=codeBlock] code[class*=language-],
 [data-code-block-theme=coy] div[data-type=codeBlock] pre[class*=language-] {
@@ -3640,6 +3406,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   -moz-hyphens: none;
   -ms-hyphens: none;
   hyphens: none;
+}
+[data-code-block-theme=coy] div[data-type=codeBlock] {
+  /* Code blocks */
 }
 [data-code-block-theme=coy] div[data-type=codeBlock] pre[class*=language-] {
   position: relative;
@@ -3663,6 +3432,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   padding: 0 1em;
   display: block;
 }
+[data-code-block-theme=coy] div[data-type=codeBlock] {
+  /* Margin bottom to accommodate shadow */
+}
 [data-code-block-theme=coy] div[data-type=codeBlock] :not(pre) > code[class*=language-],
 [data-code-block-theme=coy] div[data-type=codeBlock] pre[class*=language-] {
   background-color: #fdfdfd;
@@ -3670,6 +3442,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   margin-bottom: 1em;
+}
+[data-code-block-theme=coy] div[data-type=codeBlock] {
+  /* Inline code */
 }
 [data-code-block-theme=coy] div[data-type=codeBlock] :not(pre) > code[class*=language-] {
   position: relative;
@@ -3780,6 +3555,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
     box-shadow: none;
   }
 }
+[data-code-block-theme=coy] div[data-type=codeBlock] {
+  /* Plugin styles: Line Numbers */
+}
 [data-code-block-theme=coy] div[data-type=codeBlock] pre[class*=language-].line-numbers.line-numbers {
   padding-left: 0;
 }
@@ -3788,6 +3566,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 }
 [data-code-block-theme=coy] div[data-type=codeBlock] pre[class*=language-].line-numbers.line-numbers .line-numbers-rows {
   left: 0;
+}
+[data-code-block-theme=coy] div[data-type=codeBlock] {
+  /* Plugin styles: Line Highlight */
 }
 [data-code-block-theme=coy] div[data-type=codeBlock] pre[class*=language-][data-line] {
   padding-top: 0;
@@ -3832,8 +3613,6 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   cyan      #2aa198
   green     #859900
   */
-  /* Code blocks */
-  /* Inline code */
 }
 [data-code-block-theme=solarized-light] div[data-type=codeBlock] code[class*=language-],
 [data-code-block-theme=solarized-light] div[data-type=codeBlock] pre[class*=language-] {
@@ -3862,6 +3641,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=solarized-light] div[data-type=codeBlock] code[class*=language-]::selection, [data-code-block-theme=solarized-light] div[data-type=codeBlock] code[class*=language-] ::selection {
   background: #073642; /* base02 */
 }
+[data-code-block-theme=solarized-light] div[data-type=codeBlock] {
+  /* Code blocks */
+}
 [data-code-block-theme=solarized-light] div[data-type=codeBlock] pre[class*=language-] {
   padding: 1em;
   margin: 0.5em 0;
@@ -3871,6 +3653,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 [data-code-block-theme=solarized-light] div[data-type=codeBlock] :not(pre) > code[class*=language-],
 [data-code-block-theme=solarized-light] div[data-type=codeBlock] pre[class*=language-] {
   background-color: #fdf6e3; /* base3 */
+}
+[data-code-block-theme=solarized-light] div[data-type=codeBlock] {
+  /* Inline code */
 }
 [data-code-block-theme=solarized-light] div[data-type=codeBlock] :not(pre) > code[class*=language-] {
   padding: 0.1em;
@@ -4100,7 +3885,7 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   --panel-body-bg: var(--panel-primary-body-bg, transparent);
   --panel-body-color: var(--panel-primary-body-color, #0a58ca);
   --panel-body-border-radius: var(--panel-primary-body-border-radius, 0);
-  --panel-icon: var(--panel-primary-icon, "");
+  --panel-icon: var(--panel-primary-icon, '\EA6A');
 }
 
 .cherry-panel__info {
@@ -4114,7 +3899,7 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   --panel-body-bg: var(--panel-info-body-bg, transparent);
   --panel-body-color: var(--panel-info-body-color, #087990);
   --panel-body-border-radius: var(--panel-info-body-border-radius, 0);
-  --panel-icon: var(--panel-info-icon, "");
+  --panel-icon: var(--panel-info-icon, '\EA69');
 }
 
 .cherry-panel__warning {
@@ -4128,7 +3913,7 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   --panel-body-bg: var(--panel-warning-body-bg, transparent);
   --panel-body-color: var(--panel-warning-body-color, #997404);
   --panel-body-border-radius: var(--panel-warning-body-border-radius, 0);
-  --panel-icon: var(--panel-warning-icon, "");
+  --panel-icon: var(--panel-warning-icon, '\EA6B');
 }
 
 .cherry-panel__danger {
@@ -4142,7 +3927,7 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   --panel-body-bg: var(--panel-danger-body-bg, transparent);
   --panel-body-color: var(--panel-danger-body-color, #b02a37);
   --panel-body-border-radius: var(--panel-danger-body-border-radius, 0);
-  --panel-icon: var(--panel-danger-icon, "");
+  --panel-icon: var(--panel-danger-icon, '\EA68');
 }
 
 .cherry-panel__success {
@@ -4156,14 +3941,107 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   --panel-body-bg: var(--panel-success-body-bg, transparent);
   --panel-body-color: var(--panel-success-body-color, #146c43);
   --panel-body-border-radius: var(--panel-success-body-border-radius, 0);
-  --panel-icon: var(--panel-success-icon, "");
+  --panel-icon: var(--panel-success-icon, '\EA67');
 }
 
-.cherry {
-  /* 表格行/列重排序的高亮线 */
-  /* 表格行/列插入边界的高亮线 */
-  /* 菜单气泡样式 */
+.cherry-bubble {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  font-size: var(--font-size-sm);
+  min-height: var(--bubble-btn-height);
+  min-width: 50px;
+  border: var(--border-width-1) solid var(--bubble-border);
+  background-color: var(--bubble-bg);
+  box-shadow: var(--bubble-shadow);
+  border-radius: var(--bubble-radius);
+  z-index: var(--bubble-z-index);
+  padding: var(--spacing-xs);
 }
+.cherry-bubble.cherry-bubble--centered {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.cherry-bubble .cherry-bubble-top,
+.cherry-bubble .cherry-bubble-bottom {
+  position: absolute;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  background: var(--bubble-bg);
+  box-sizing: border-box;
+  z-index: calc(var(--bubble-z-index) + 1);
+  pointer-events: none;
+}
+.cherry-bubble .cherry-bubble-top {
+  top: 0;
+  transform: translateY(-50%) rotate(45deg);
+  border-top: var(--border-width-1) solid var(--bubble-border);
+  border-left: var(--border-width-1) solid var(--bubble-border);
+  border-right: var(--border-width-1) solid transparent;
+  border-bottom: var(--border-width-1) solid transparent;
+}
+.cherry-bubble .cherry-bubble-bottom {
+  bottom: 0;
+  transform: translateY(50%) rotate(45deg);
+  border-bottom: var(--border-width-1) solid var(--bubble-border);
+  border-right: var(--border-width-1) solid var(--bubble-border);
+  border-top: var(--border-width-1) solid transparent;
+  border-left: var(--border-width-1) solid transparent;
+}
+.cherry-bubble .cherry-toolbar-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--bubble-btn-height);
+  color: var(--toolbar-btn-color);
+  background: var(--toolbar-btn-bg);
+  padding: var(--bubble-padding);
+  cursor: pointer;
+  user-select: none;
+  z-index: calc(var(--bubble-z-index) + 2);
+}
+.cherry-bubble .cherry-toolbar-button:hover {
+  border-color: var(--toolbar-border);
+  background-color: var(--toolbar-btn-hover-bg);
+  color: var(--toolbar-btn-hover-color);
+}
+.cherry-bubble .cherry-toolbar-button.cherry-toolbar-split {
+  height: 65%;
+  min-height: calc(0.65 * var(--bubble-btn-height));
+}
+
+.cherry-switch-paste {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cherry-switch-paste .cherry-toolbar-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  color: var(--toolbar-btn-color);
+  background: var(--toolbar-btn-bg);
+  border-radius: var(--dropdown-radius);
+  border: none;
+  transition: background-color 0.2s;
+}
+.cherry-switch-paste .cherry-toolbar-button:hover {
+  background-color: var(--dropdown-item-hover-bg);
+  color: var(--dropdown-item-hover-color);
+}
+.cherry-switch-paste .cherry-toolbar-button.active {
+  background-color: var(--dropdown-item-active-bg);
+  color: var(--dropdown-item-active-color);
+}
+
 .cherry .doing-resize-img {
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -4238,6 +4116,20 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   cursor: e-resize;
 }
 .cherry .cherry-previewer-img-tool-handler {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  font-size: var(--font-size-sm);
+  min-height: var(--bubble-btn-height);
+  min-width: 50px;
+  border: var(--border-width-1) solid var(--bubble-border);
+  background-color: var(--bubble-bg);
+  box-shadow: var(--bubble-shadow);
+  border-radius: var(--bubble-radius);
+  z-index: var(--bubble-z-index);
+  padding: var(--spacing-xs);
   padding: var(--bubble-padding);
   display: flex;
   flex-direction: column;
@@ -4266,6 +4158,7 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 }
 .cherry .cherry-previewer-img-tool-handler .img-tool-button.active, .cherry .cherry-previewer-img-tool-handler .img-tool-button:hover {
   background-color: var(--toolbar-btn-hover-bg);
+  color: var(--toolbar-btn-hover-color);
 }
 .cherry .cherry-previewer-img-tool-handler .img-tool-divider {
   width: 100%;
@@ -4296,8 +4189,6 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 .cherry .cherry-previewer-table-hover-handler {
   position: absolute;
   pointer-events: none;
-  /* 插入行/列的触发符号 */
-  /* 菜单按钮 */
 }
 .cherry .cherry-previewer-table-hover-handler-container, .cherry .cherry-previewer-table-hover-handler-menu-container {
   position: absolute;
@@ -4306,6 +4197,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   padding: 0;
   margin: 0;
   list-style-type: none;
+}
+.cherry .cherry-previewer-table-hover-handler {
+  /* 插入行/列的触发符号 */
 }
 .cherry .cherry-previewer-table-hover-handler__symbol {
   pointer-events: auto;
@@ -4324,6 +4218,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 }
 .cherry .cherry-previewer-table-hover-handler__symbol:hover {
   background-color: var(--secondary-color);
+}
+.cherry .cherry-previewer-table-hover-handler {
+  /* 菜单按钮 */
 }
 .cherry .cherry-previewer-table-hover-handler__menu {
   pointer-events: auto;
@@ -4353,6 +4250,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   line-height: 1;
   vertical-align: baseline;
 }
+.cherry {
+  /* 表格行/列重排序的高亮线 */
+}
 .cherry .table-highlight-border-reorder-left {
   border-left: 2px solid var(--md-table-drag-border-bg) !important;
 }
@@ -4369,6 +4269,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 .cherry .table-highlight-row {
   background-color: var(--md-table-sort-active-bg) !important;
 }
+.cherry {
+  /* 表格行/列插入边界的高亮线 */
+}
 .cherry .cherry-previewer-table-boundary-trigger-line {
   position: absolute;
   pointer-events: none;
@@ -4384,6 +4287,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   right: 0;
   height: 0;
   border-top: 2px solid var(--md-table-operator-color);
+}
+.cherry {
+  /* 菜单气泡样式 */
 }
 .cherry .cherry-previewer-table-menu-bubble {
   position: absolute;
@@ -5001,6 +4907,29 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   color: var(--color-error);
 }
 
+.cherry .cm-editor .cm-cursor {
+  border-left: 2px solid var(--editor-cursor-color);
+}
+.cherry .cm-editor.cm-focused .cm-cursor {
+  border-left-color: var(--editor-cursor-color);
+}
+.cherry .cm-editor .cm-gutter {
+  border-right: 1px solid var(--base-border-color);
+  background-color: var(--base-editor-bg);
+}
+.cherry .cm-editor .cm-lineNumbers {
+  color: var(--editor-line-number-color);
+  padding: 0 8px 0 4px;
+  font-family: var(--font-family-mono);
+  font-size: 0.9em;
+}
+.cherry .cm-editor .cm-activeLineGutter {
+  background-color: var(--editor-active-line-bg);
+}
+.cherry .cm-editor .cm-searching {
+  background-color: var(--searching-highlight-color, rgba(252, 195, 25, 0.5));
+}
+
 .cherry {
   display: flex;
   flex-flow: row wrap;
@@ -5015,8 +4944,42 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   max-height: calc(100% - var(--height-toolbar));
   min-height: calc(100% - var(--height-toolbar));
 }
-.cherry .CodeMirror {
+.cherry .cm-editor.cm-focused {
+  outline: none !important;
+}
+.cherry .cm-editor {
+  width: 100%;
   height: 100%;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-md);
+  line-height: var(--md-paragraph-line-height);
+}
+.cherry .cm-editor .cm-scroller {
+  font-family: inherit;
+  line-height: inherit;
+}
+.cherry .cm-editor .cm-content {
+  width: 100%;
+  padding: 15px 34px;
+  word-break: break-all;
+  white-space: pre-wrap;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+.cherry .cm-editor .cm-line {
+  font-family: inherit;
+}
+.cherry .cm-editor .cm-line.cm-activeLine {
+  background-color: var(--editor-active-line-bg);
+}
+.cherry .cm-editor .cm-selectionLayer .cm-selectionBackground {
+  background-color: var(--editor-selection-bg) !important;
+}
+.cherry .cm-editor.cm-focused .cm-selectionBackground {
+  background-color: var(--editor-selection-bg) !important;
+}
+.cherry .cm-editor .cm-selectionBackground {
+  background-color: var(--editor-selection-bg) !important;
 }
 .cherry.cherry--no-toolbar .cherry-toolbar,
 .cherry.cherry--no-toolbar .cherry-sidebar {
@@ -5144,7 +5107,7 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   padding: var(--toolbar-padding);
   font-size: var(--toolbar-font-size);
   line-height: 2.8;
-  min-height: var(--toolbar-min-height);
+  min-height: var(--height-toolbar);
   flex-basis: 100%;
   box-sizing: border-box;
   z-index: 2;
@@ -5244,8 +5207,6 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 .cherry-toolbar .cherry-toolbar,
 .cherry-toolbar .cherry-floatmenu,
 .cherry-toolbar .cherry-bubble,
-.cherry-toolbar .cherry .cherry-previewer-img-tool-handler,
-.cherry .cherry-toolbar .cherry-previewer-img-tool-handler,
 .cherry-toolbar .cherry-sidebar {
   background: var(--toolbar-bg);
   border-color: var(--toolbar-border);
@@ -5253,24 +5214,18 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 .cherry-toolbar .cherry-toolbar .cherry-toolbar-button,
 .cherry-toolbar .cherry-floatmenu .cherry-toolbar-button,
 .cherry-toolbar .cherry-bubble .cherry-toolbar-button,
-.cherry-toolbar .cherry .cherry-previewer-img-tool-handler .cherry-toolbar-button,
-.cherry .cherry-toolbar .cherry-previewer-img-tool-handler .cherry-toolbar-button,
 .cherry-toolbar .cherry-sidebar .cherry-toolbar-button {
   color: var(--toolbar-btn-color);
 }
 .cherry-toolbar .cherry-toolbar .cherry-toolbar-button i,
 .cherry-toolbar .cherry-floatmenu .cherry-toolbar-button i,
 .cherry-toolbar .cherry-bubble .cherry-toolbar-button i,
-.cherry-toolbar .cherry .cherry-previewer-img-tool-handler .cherry-toolbar-button i,
-.cherry .cherry-toolbar .cherry-previewer-img-tool-handler .cherry-toolbar-button i,
 .cherry-toolbar .cherry-sidebar .cherry-toolbar-button i {
   color: var(--toolbar-btn-color);
 }
 .cherry-toolbar .cherry-toolbar .cherry-toolbar-button:hover,
 .cherry-toolbar .cherry-floatmenu .cherry-toolbar-button:hover,
 .cherry-toolbar .cherry-bubble .cherry-toolbar-button:hover,
-.cherry-toolbar .cherry .cherry-previewer-img-tool-handler .cherry-toolbar-button:hover,
-.cherry .cherry-toolbar .cherry-previewer-img-tool-handler .cherry-toolbar-button:hover,
 .cherry-toolbar .cherry-sidebar .cherry-toolbar-button:hover {
   background-color: var(--toolbar-btn-hover-bg);
   color: var(--toolbar-btn-hover-color) !important;
@@ -5279,22 +5234,20 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 .cherry-toolbar .cherry-toolbar .cherry-toolbar-button:hover i,
 .cherry-toolbar .cherry-floatmenu .cherry-toolbar-button:hover i,
 .cherry-toolbar .cherry-bubble .cherry-toolbar-button:hover i,
-.cherry-toolbar .cherry .cherry-previewer-img-tool-handler .cherry-toolbar-button:hover i,
-.cherry .cherry-toolbar .cherry-previewer-img-tool-handler .cherry-toolbar-button:hover i,
 .cherry-toolbar .cherry-sidebar .cherry-toolbar-button:hover i {
   color: var(--toolbar-btn-hover-color) !important;
 }
 
-.cherry {
-  --ace-serach-bg: var(--dropdown-bg);
-  --ace-search-text-color: var(--toolbar-btn-color);
-}
 .cherry.theme__default {
-  --ace-serach-bg: var(--oc-white);
+  --ace-search-bg: var(--oc-white);
   --ace-search-text-color: var(--base-font-color);
 }
+.cherry {
+  --ace-search-bg: var(--dropdown-bg);
+  --ace-search-text-color: var(--toolbar-btn-color);
+}
 .cherry .ace_search {
-  background: var(--ace-serach-bg);
+  background: var(--ace-search-bg);
   color: var(--ace-search-text-color);
   border: var(--border-width-1) solid var(--dropdown-border);
   border-radius: var(--radius-2xl);
@@ -5353,7 +5306,7 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 }
 .cherry .ace_search .ace_searchbtn,
 .cherry .ace_search .ace_replacebtn {
-  background: var(--ace-serach-bg);
+  background: var(--ace-search-bg);
   color: var(--ace-search-text-color);
   border: 0 none;
   border-left: 1px solid var(--oc-gray-3);
@@ -5447,13 +5400,13 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 }
 
 .cherry {
-  --seraching-highlight-color: rgba(252, 195, 25, 0.5);
+  --searching-highlight-color: rgba(252, 195, 25, 0.5);
 }
 .cherry.theme__dark {
-  --seraching-highlight-color: rgba(77, 171, 247, 0.4);
+  --searching-highlight-color: rgba(77, 171, 247, 0.4);
 }
 .cherry .cm-searching {
-  background-color: var(--seraching-highlight-color);
+  background-color: var(--searching-highlight-color);
 }
 
 .cherry-sidebar {
@@ -5465,6 +5418,12 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   z-index: 11;
   bottom: 0;
   overflow: hidden;
+}
+.cherry-sidebar .cherry-sidebar-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
 }
 .cherry-sidebar .cherry-toolbar-button {
   height: 30px;
@@ -5501,105 +5460,6 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   100% {
     transform: rotate(360deg);
   }
-}
-
-.cherry-bubble, .cherry .cherry-previewer-img-tool-handler {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  font-size: var(--font-size-sm);
-  min-height: var(--bubble-btn-height);
-  min-width: 50px;
-  border: var(--border-width-1) solid var(--bubble-border);
-  background-color: var(--bubble-bg);
-  box-shadow: var(--bubble-shadow);
-  border-radius: var(--bubble-radius);
-  z-index: var(--bubble-z-index);
-  padding: var(--spacing-xs);
-}
-.cherry-bubble.cherry-bubble--centered, .cherry .cherry-bubble--centered.cherry-previewer-img-tool-handler {
-  left: 50%;
-  transform: translateX(-50%);
-}
-.cherry-bubble .cherry-bubble-top, .cherry .cherry-previewer-img-tool-handler .cherry-bubble-top,
-.cherry-bubble .cherry-bubble-bottom,
-.cherry .cherry-previewer-img-tool-handler .cherry-bubble-bottom {
-  position: absolute;
-  left: 50%;
-  width: 12px;
-  height: 12px;
-  margin-left: -6px;
-  background: var(--bubble-bg);
-  box-sizing: border-box;
-  z-index: calc(var(--bubble-z-index) + 1);
-  pointer-events: none;
-}
-.cherry-bubble .cherry-bubble-top, .cherry .cherry-previewer-img-tool-handler .cherry-bubble-top {
-  top: 0;
-  transform: translateY(-50%) rotate(45deg);
-  border-top: var(--border-width-1) solid var(--bubble-border);
-  border-left: var(--border-width-1) solid var(--bubble-border);
-  border-right: var(--border-width-1) solid transparent;
-  border-bottom: var(--border-width-1) solid transparent;
-}
-.cherry-bubble .cherry-bubble-bottom, .cherry .cherry-previewer-img-tool-handler .cherry-bubble-bottom {
-  bottom: 0;
-  transform: translateY(50%) rotate(45deg);
-  border-bottom: var(--border-width-1) solid var(--bubble-border);
-  border-right: var(--border-width-1) solid var(--bubble-border);
-  border-top: var(--border-width-1) solid transparent;
-  border-left: var(--border-width-1) solid transparent;
-}
-.cherry-bubble .cherry-toolbar-button, .cherry .cherry-previewer-img-tool-handler .cherry-toolbar-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: var(--bubble-btn-height);
-  color: var(--toolbar-btn-color);
-  background: var(--toolbar-btn-bg);
-  padding: var(--bubble-padding);
-  cursor: pointer;
-  user-select: none;
-  z-index: calc(var(--bubble-z-index) + 2);
-}
-.cherry-bubble .cherry-toolbar-button:hover, .cherry .cherry-previewer-img-tool-handler .cherry-toolbar-button:hover {
-  border-color: var(--toolbar-border);
-  background-color: var(--toolbar-btn-hover-bg);
-  color: var(--toolbar-btn-hover-color);
-}
-.cherry-bubble .cherry-toolbar-button.cherry-toolbar-split, .cherry .cherry-previewer-img-tool-handler .cherry-toolbar-button.cherry-toolbar-split {
-  height: 65%;
-  min-height: calc(0.65 * var(--bubble-btn-height));
-}
-
-.cherry-switch-paste {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.cherry-switch-paste .cherry-toolbar-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 80px;
-  text-align: center;
-  cursor: pointer;
-  user-select: none;
-  color: var(--toolbar-btn-color);
-  background: var(--toolbar-btn-bg);
-  border-radius: var(--dropdown-radius);
-  border: none;
-  transition: background-color 0.2s;
-}
-.cherry-switch-paste .cherry-toolbar-button:hover {
-  background-color: var(--dropdown-item-hover-bg);
-  color: var(--dropdown-item-hover-color);
-}
-.cherry-switch-paste .cherry-toolbar-button.active {
-  background-color: var(--dropdown-item-active-bg);
-  color: var(--dropdown-item-active-color);
 }
 
 .cherry-floatmenu {
@@ -5653,6 +5513,10 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   color: var(--toolbar-btn-hover-color);
 }
 
+#cherry-text {
+  display: none !important;
+}
+
 .cherry-editor {
   position: relative;
   padding-top: 5px;
@@ -5690,59 +5554,53 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   pointer-events: none;
   z-index: 11;
 }
-.cherry-editor-writing-style--typewriter .CodeMirror-lines {
+.cherry-editor-writing-style--typewriter .cm-lineWrapping {
   position: relative;
 }
-.cherry-editor-writing-style--typewriter .CodeMirror-lines::before {
+.cherry-editor-writing-style--typewriter .cm-lineWrapping::before {
   content: "";
   display: block;
 }
-.cherry-editor-writing-style--typewriter .CodeMirror-lines::after {
+.cherry-editor-writing-style--typewriter .cm-lineWrapping::after {
   content: "";
   display: block;
 }
-.cherry-editor .CodeMirror {
+.cherry-editor .cm-editor {
   font-family: var(--font-family-sans);
   background-color: var(--base-editor-bg);
   color: var(--base-font-color);
 }
-.cherry-editor .CodeMirror textarea {
+.cherry-editor .cm-editor textarea {
   font-size: var(--md-paragraph-line-height);
 }
-.cherry-editor .CodeMirror .CodeMirror-cursor {
-  border-left: 1px solid var(--editor-cursor-color);
-}
-.cherry-editor .CodeMirror .CodeMirror-selected {
-  background-color: var(--editor-selection-bg);
-}
-.cherry-editor .CodeMirror .CodeMirror-scroll span,
-.cherry-editor .CodeMirror .CodeMirror-scroll .cm-variable-2,
-.cherry-editor .CodeMirror .CodeMirror-scroll .cm-string,
-.cherry-editor .CodeMirror .CodeMirror-scroll .cm-strong,
-.cherry-editor .CodeMirror .CodeMirror-scroll .cm-em,
-.cherry-editor .CodeMirror .CodeMirror-scroll .cm-meta {
+.cherry-editor .cm-editor .cm-scroller span,
+.cherry-editor .cm-editor .cm-scroller .cm-variable-2,
+.cherry-editor .cm-editor .cm-scroller .cm-string,
+.cherry-editor .cm-editor .cm-scroller .cm-strong,
+.cherry-editor .cm-editor .cm-scroller .cm-em,
+.cherry-editor .cm-editor .cm-scroller .cm-meta {
   color: var(--base-font-color);
 }
-.cherry-editor .CodeMirror .CodeMirror-scroll .cm-image-marker,
-.cherry-editor .CodeMirror .CodeMirror-scroll .cm-quote,
-.cherry-editor .CodeMirror .CodeMirror-scroll .cm-header,
-.cherry-editor .CodeMirror .CodeMirror-scroll .cm-atom {
+.cherry-editor .cm-editor .cm-scroller .cm-image-marker,
+.cherry-editor .cm-editor .cm-scroller .cm-quote,
+.cherry-editor .cm-editor .cm-scroller .cm-header,
+.cherry-editor .cm-editor .cm-scroller .cm-atom {
   color: var(--editor-header-color);
 }
-.cherry-editor .CodeMirror .CodeMirror-scroll .cm-url {
-  background-color: var(--editor-url-bg-color);
+.cherry-editor .cm-editor .cm-scroller .cm-url {
+  color: var(--editor-url-color);
 }
-.cherry-editor .CodeMirror .CodeMirror-scroll .cm-comment,
-.cherry-editor .CodeMirror .CodeMirror-scroll .cm-url {
+.cherry-editor .cm-editor .cm-scroller .cm-comment,
+.cherry-editor .cm-editor .cm-scroller .cm-url {
   color: var(--editor-comment-color);
 }
-.cherry-editor .CodeMirror-lines {
+.cherry-editor .cm-editor .cm-lineWrapping {
   padding: 15px 34px;
 }
-.cherry-editor .CodeMirror-lines .long-text,
-.cherry-editor .CodeMirror-lines .drawio,
-.cherry-editor .CodeMirror-lines .base64,
-.cherry-editor .CodeMirror-lines .url-truncated {
+.cherry-editor .cm-editor .cm-lineWrapping .long-text,
+.cherry-editor .cm-editor .cm-lineWrapping .drawio,
+.cherry-editor .cm-editor .cm-lineWrapping .base64,
+.cherry-editor .cm-editor .cm-lineWrapping .url-truncated {
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -5752,46 +5610,82 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   color: darkmagenta !important;
   font-size: var(--font-size-xs) !important;
 }
-.cherry-editor .CodeMirror-lines .url-truncated {
+.cherry-editor .cm-editor .cm-lineWrapping .url-truncated {
   max-width: 200px;
 }
-.cherry-editor .cm-s-default .cm-header {
+.cherry-editor .cm-editor .cm-lineWrapping .cm-invalidchar[title=\\u200b] {
+  display: none;
+}
+.cherry-editor .cm-editor .cm-header {
   color: var(--editor-header-color);
 }
-.cherry-editor .cm-s-default .cm-string {
+.cherry-editor .cm-editor .cm-header.cm-meta {
+  opacity: 0.5;
+}
+.cherry-editor .cm-editor .cm-header.cm-header-1 {
+  font-size: 2em;
+}
+.cherry-editor .cm-editor .cm-header.cm-header-2 {
+  font-size: 1.5em;
+}
+.cherry-editor .cm-editor .cm-header.cm-header-3 {
+  font-size: 1.25em;
+}
+.cherry-editor .cm-editor .cm-header.cm-header-4 {
+  font-size: 1em;
+}
+.cherry-editor .cm-editor .cm-header.cm-header-5 {
+  font-size: 0.875em;
+}
+.cherry-editor .cm-editor .cm-header.cm-header-6 {
+  font-size: 0.85em;
+}
+.cherry-editor .cm-editor .cm-string {
   color: var(--editor-string-color);
 }
-.cherry-editor .cm-s-default .cm-comment {
+.cherry-editor .cm-editor .cm-comment {
   color: var(--editor-comment-color);
   font-family: var(--font-family-mono);
   font-size: 0.9em;
 }
-.cherry-editor .cm-s-default .cm-whitespace,
-.cherry-editor .cm-tab {
+.cherry-editor .cm-editor .cm-whitespace,
+.cherry-editor .cm-editor .cm-tab {
   font-family: var(--font-family-mono);
   font-size: 0.9em;
 }
-.cherry-editor .cm-s-default .cm-quote {
+.cherry-editor .cm-editor .cm-quote {
   color: var(--editor-quote-color);
 }
-.cherry-editor .cm-s-default .cm-link {
+.cherry-editor .cm-editor .cm-link {
+  text-decoration: underline;
   color: var(--editor-link-color);
 }
-.cherry-editor .cm-s-default .cm-url {
-  background: var(--editor-url-bg-color);
+.cherry-editor .cm-editor .cm-header {
+  text-decoration: none;
+}
+.cherry-editor .cm-editor .cm-url {
+  color: var(--editor-url-color);
   font-family: var(--font-family-mono);
   font-size: 0.9em;
+  text-decoration: none;
 }
-.cherry-editor .cm-s-default .cm-variable-2 {
+.cherry-editor .cm-editor .cm-url-bracket {
+  color: #3b82f6;
+  font-weight: bold;
+  background-color: rgba(59, 130, 246, 0.1);
+  border-radius: 2px;
+  padding: 0 1px;
+}
+.cherry-editor .cm-editor .cm-variable-2 {
   color: var(--editor-v2-color);
 }
-.cherry-editor .cm-s-default .cm-variable-3 {
+.cherry-editor .cm-editor .cm-variable-3 {
   color: var(--editor-v3-color);
 }
-.cherry-editor .cm-s-default .cm-keyword {
+.cherry-editor .cm-editor .cm-keyword {
   color: var(--editor-keyword-color);
 }
-.cherry-editor .cm-s-default .cm-fullWidth {
+.cherry-editor .cm-editor .cm-fullWidth {
   color: var(--full-width-color) !important;
   z-index: 3;
   cursor: pointer;
@@ -5836,6 +5730,11 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 .cherry-previewer-codeBlock-click-handler {
   position: absolute;
   z-index: 1;
+}
+.cherry-previewer-codeBlock-click-handler .cm-editor {
+  font-family: var(--font-family-sans);
+  background-color: var(--base-editor-bg);
+  color: var(--base-font-color);
 }
 
 .cherry-mask-code-block {
@@ -6376,7 +6275,7 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   z-index: 11;
   position: absolute;
   right: 0;
-  top: calc(var(--height-toolbar) + 120px);
+  top: calc(var(--height-toolbar) + var(--sidebar-list-height));
   height: calc(100% - 220px);
   max-height: 600px;
   width: 160px;
@@ -6476,13 +6375,13 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   width: 30px;
   height: calc(100% - 200px);
   max-height: 600px;
-  background: rgba(255, 255, 255, 0);
+  background: transparent;
   box-shadow: none;
   border-radius: 0;
 }
 .cherry-flex-toc.cherry-flex-toc__pure .cherry-toc-head {
   height: 25px;
-  border-bottom: 1px dashed rgba(51, 51, 51, 0);
+  border-bottom: 1px dashed transparent;
 }
 .cherry-flex-toc.cherry-flex-toc__pure .cherry-toc-head .cherry-toc-title {
   display: none;
@@ -6565,17 +6464,20 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   --toolbar-btn-hover-color: var(--primary-color);
   --toolbar-btn-active-bg: var(--secondary-color);
   --toolbar-split-color: var(--oc-blue-5);
+  --dropdown-item-hover-bg: var(--toolbar-btn-hover-bg);
+  --dropdown-item-hover-color: var(--toolbar-btn-hover-color);
   /* ========== 编辑器相关变量 ========== */
   --editor-header-color: var(--primary-color);
   --editor-string-color: var(--oc-blue-4);
   --editor-comment-color: var(--oc-blue-4);
   --editor-quote-color: var(--oc-gray-8);
   --editor-link-color: var(--oc-blue-4);
-  --editor-url-bg-color: var(--oc-blue-0);
+  --editor-url-color: var(--oc-blue-0);
   --editor-v2-color: var(--oc-gray-8);
   --editor-v3-color: var(--primary-color);
   --editor-keyword-color: var(--oc-blue-4);
   --editor-selection-bg: var(--oc-blue-2);
+  --editor-active-line-bg: rgba(231, 245, 255, 0.4);
   /* ========== Markdown 相关变量 ========== */
   --md-heading-color: var(--primary-color);
   --md-paragraph-color: var(--oc-gray-8);
@@ -6600,22 +6502,6 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 }
 
 /** 预览区域样式 */
-.cherry-markdown.theme__default {
-  /** checklist 模式，未勾选时 */
-  /** checklist 模式，勾选时 */
-  /** 行内代码 */
-  /** 
-   * 代码块
-   */
-  /** 
-   * 表格
-   */
-  /** 可以理解为上下结构的音标，下部是文字，上部是对应的拼音 */
-  /** 脚注 */
-  /** 行间公式 */
-  /** 段落公式 */
-  /** 目录 */
-}
 .cherry-markdown.theme__default h1,
 .cherry-markdown.theme__default h2,
 .cherry-markdown.theme__default h3,
@@ -6624,9 +6510,55 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 .cherry-markdown.theme__default h6 {
   /** 标题前面的锚点或序号 */
 }
+
+.cherry-markdown.theme__default {
+  /** checklist 模式，未勾选时 */
+}
+
+.cherry-markdown.theme__default {
+  /** checklist 模式，勾选时 */
+}
+
+.cherry-markdown.theme__default {
+  /** 行内代码 */
+}
+
+.cherry-markdown.theme__default {
+  /** 
+   * 代码块
+   */
+}
+
+.cherry-markdown.theme__default {
+  /** 
+   * 表格
+   */
+}
+
+.cherry-markdown.theme__default {
+  /** 可以理解为上下结构的音标，下部是文字，上部是对应的拼音 */
+}
+
 .cherry-markdown.theme__default ruby {
   /** 上部的拼音 */
 }
+
+.cherry-markdown.theme__default {
+  /** 脚注 */
+}
+
+.cherry-markdown.theme__default {
+  /** 行间公式 */
+}
+
+.cherry-markdown.theme__default {
+  /** 段落公式 */
+}
+
+.cherry-markdown.theme__default {
+  /** 目录 */
+}
+
 /*
  * 暗黑主题
  */
@@ -6651,11 +6583,12 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   --editor-comment-color: var(--oc-yellow-3);
   --editor-quote-color: var(--oc-gray-4);
   --editor-link-color: var(--oc-yellow-3);
-  --editor-url-bg-color: rgb(81, 56, 56);
+  --editor-url-color: rgb(81, 56, 56);
   --editor-v2-color: var(--oc-gray-4);
   --editor-v3-color: var(--primary-color);
   --editor-keyword-color: var(--oc-yellow-3);
   --editor-selection-bg: rgba(134, 142, 150, 0.8);
+  --editor-active-line-bg: rgba(134, 142, 150, 0.4);
   --dropdown-item-hover-bg: var(--oc-gray-9);
   --dropdown-item-hover-color: var(--oc-orange-5);
   --dropdown-item-active-bg: var(--secondary-color);
@@ -6688,48 +6621,32 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   --accordion-body-bg: var(--oc-gray-7);
   --accordion-body-border: var(--oc-gray-6);
   --accordion-body-color: var(--oc-gray-4);
+  /* ========== Mermaid 工具栏变量覆盖 ========== */
+  --mermaid-toolbar-slider-bg: rgba(255, 255, 255, 0.15);
+  --mermaid-toolbar-tab-active-color: #fff;
   /* 目录区域样式 */
 }
-.cherry.theme__dark .cherry-flex-toc:hover {
-  background-color: var(--oc-gray-4);
-  width: 260px;
-}
+
 .cherry.theme__dark .cherry-flex-toc .cherry-toc-head i:hover {
-  color: var(--primary-color);
+  color: var(--oc-orange-8);
 }
+
 .cherry.theme__dark .cherry-flex-toc .cherry-toc-list .cherry-toc-one-a {
   border-left-color: rgba(255, 146, 43, 0.3);
 }
+
 .cherry.theme__dark .cherry-flex-toc .cherry-toc-list .cherry-toc-one-a.current {
   border-left-color: var(--oc-orange-6);
   color: var(--oc-orange-6);
 }
+
 .cherry.theme__dark .cherry-flex-toc .cherry-toc-list .cherry-toc-one-a:hover {
   border-left-color: var(--oc-orange-4);
   color: var(--oc-orange-6);
 }
-.cherry.theme__dark .cherry-flex-toc.cherry-flex-toc__pure {
-  box-shadow: none;
-}
-.cherry.theme__dark .cherry-flex-toc.cherry-flex-toc__pure .cherry-toc-head .cherry-toc-title {
-  display: none;
-}
-.cherry.theme__dark .cherry-flex-toc.cherry-flex-toc__pure .cherry-toc-head .ch-icon-chevronsRight {
-  display: none;
-}
+
 .cherry.theme__dark .cherry-flex-toc.cherry-flex-toc__pure .cherry-toc-head .ch-icon-chevronsLeft {
-  display: inline;
   color: var(--oc-orange-6);
-}
-.cherry.theme__dark .cherry-flex-toc.cherry-flex-toc__pure .cherry-toc-list {
-  padding-left: 7px;
-}
-.cherry.theme__dark .cherry-flex-toc.cherry-flex-toc__pure .cherry-toc-list .cherry-toc-one-a {
-  overflow: hidden;
-  width: 0;
-  margin-bottom: 3px;
-  height: 5px;
-  border-left-width: 18px;
 }
 
 /** 快捷键配置面板样式 */
@@ -6738,6 +6655,29 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 }
 
 /** 预览区域样式 */
+.cherry-markdown.theme__dark figure svg:not(.echarts-svg) path,
+.cherry-markdown.theme__dark figure svg:not(.echarts-svg) rect,
+.cherry-markdown.theme__dark figure svg:not(.echarts-svg) line {
+  stroke: var(--oc-yellow-3) !important;
+}
+
+.cherry-markdown.theme__dark figure svg:not(.echarts-svg) text {
+  fill: var(--oc-yellow-6) !important;
+  stroke: none !important;
+}
+
+.cherry-markdown.theme__dark figure svg:not(.echarts-svg) tspan {
+  fill: var(--oc-yellow-6) !important;
+}
+
+.cherry-markdown.theme__dark figure svg:not(.echarts-svg) circle {
+  fill: var(--oc-violet-0) !important;
+}
+
+.cherry-markdown.theme__dark figure svg:not(.echarts-svg) circle.state-start {
+  fill: var(--oc-yellow-6) !important;
+}
+
 .cherry-markdown.theme__dark {
   /* ========== Panel 相关变量 ========== */
   --panel-border-radius: 16px;
@@ -6793,24 +6733,6 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   --panel-success-body-bg: linear-gradient(145deg, rgba(34, 197, 94, 0.05) 0%, rgba(16, 185, 129, 0.05) 100%);
   --panel-success-body-color: var(--oc-green-3);
 }
-.cherry-markdown.theme__dark figure svg:not(.echarts-svg) path,
-.cherry-markdown.theme__dark figure svg:not(.echarts-svg) rect,
-.cherry-markdown.theme__dark figure svg:not(.echarts-svg) line {
-  stroke: var(--oc-yellow-3) !important;
-}
-.cherry-markdown.theme__dark figure svg:not(.echarts-svg) text {
-  fill: var(--oc-yellow-6) !important;
-  stroke: none !important;
-}
-.cherry-markdown.theme__dark figure svg:not(.echarts-svg) tspan {
-  fill: var(--oc-yellow-6) !important;
-}
-.cherry-markdown.theme__dark figure svg:not(.echarts-svg) circle {
-  fill: var(--oc-violet-0) !important;
-}
-.cherry-markdown.theme__dark figure svg:not(.echarts-svg) circle.state-start {
-  fill: var(--oc-yellow-6) !important;
-}
 
 /*
  * 深海主题
@@ -6837,6 +6759,7 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   --dropdown-radius: var(--radius-xl);
   --dropdown-padding: var(--spacing-xs) 0;
   --dropdown-item-hover-bg: var(--toolbar-btn-hover-bg);
+  --dropdown-item-hover-color: var(--toolbar-btn-hover-color);
   --dropdown-item-color: var(--toolbar-btn-color);
   /* ========== 编辑器相关变量 ========== */
   --editor-header-color: var(--primary-color);
@@ -6844,11 +6767,12 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   --editor-comment-color: #A8A8A9;
   --editor-quote-color: var(--oc-gray-8);
   --editor-link-color: var(--oc-blue-4);
-  --editor-url-bg-color: none;
+  --editor-url-color: none;
   --editor-v2-color: var(--oc-gray-8);
   --editor-v3-color: var(--primary-color);
   --editor-keyword-color: var(--oc-blue-4);
   --editor-selection-bg: #636e87;
+  --editor-active-line-bg: rgba(99, 110, 135, 0.2);
   /* ========== Markdown 相关变量 ========== */
   --md-heading-color: var(--primary-color);
   --md-paragraph-color: var(--base-font-color);
@@ -6865,7 +6789,7 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   --md-toc-bg: #2A2F3B;
   --md-toc-title-color: var(--primary-color);
   --md-toc-link-color: var(--primary-color);
-  --md-toc-indicator-color: var(--primary-color);
+  --md-toc-indicator-color: var(--secondary-color);
   --md-toc-link-hover-color: var(--secondary-color);
   --md-toc-link-hover-bg: var(--primary-color);
   --md-toc-indicator-hover-color: var(--primary-color);
@@ -6878,6 +6802,9 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   --accordion-body-bg: #2A2F3B;
   --accordion-body-border: var(--oc-blue-5);
   --accordion-body-color: var(--base-font-color);
+  /* ========== Mermaid 工具栏变量覆盖 ========== */
+  --mermaid-toolbar-slider-bg: rgba(255, 255, 255, 0.15);
+  --mermaid-toolbar-tab-active-color: #fff;
   /* ========== 其余单个组件 ========== */
   --drag-border-color: #3a4453;
   /* ========== Panel 相关变量 ========== */
@@ -6940,16 +6867,20 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
 .cherry-markdown.theme__abyss figure svg:not(.echarts-svg) line {
   stroke: var(--primary-color) !important;
 }
+
 .cherry-markdown.theme__abyss figure svg:not(.echarts-svg) text {
   fill: var(--primary-color) !important;
   stroke: none !important;
 }
+
 .cherry-markdown.theme__abyss figure svg:not(.echarts-svg) tspan {
   fill: var(--primary-color) !important;
 }
+
 .cherry-markdown.theme__abyss figure svg:not(.echarts-svg) circle {
   fill: var(--oc-violet-0) !important;
 }
+
 .cherry-markdown.theme__abyss figure svg:not(.echarts-svg) circle.state-start {
   fill: var(--oc-white) !important;
 }
@@ -6972,17 +6903,20 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   --toolbar-btn-hover-color: var(--secondary-color);
   --toolbar-btn-active-bg:var(--oc-green-7);
   --toolbar-split-color: var(--oc-green-8);
+  --dropdown-item-hover-bg: var(--toolbar-btn-hover-bg);
+  --dropdown-item-hover-color: var(--toolbar-btn-hover-color);
   /* ========== 编辑器相关变量 ========== */
   --editor-header-color: var(--oc-green-7);
   --editor-string-color: var(--oc-green-6);
   --editor-comment-color: var(--oc-green-6);
   --editor-quote-color: var(--primary-color);
   --editor-link-color: var(--oc-green-6);
-  --editor-url-bg-color: var(--secondary-color);
+  --editor-url-color: var(--secondary-color);
   --editor-v2-color: var(--primary-color);
   --editor-v3-color: var(--oc-green-7);
   --editor-keyword-color: var(--oc-green-6);
   --editor-selection-bg: var(--oc-green-2);
+  --editor-active-line-bg: rgba(235, 251, 238, 0.4);
   /* ========== 预览器相关变量 ========== */
   --previewer-mobile-bg: var(--oc-white);
   /* ========== Markdown 相关变量 ========== */
@@ -7087,17 +7021,20 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   --toolbar-btn-active-bg: var(--oc-pink-7);
   --toolbar-split-color: var(--oc-pink-8);
   --dropdown-bg: var(--oc-white);
+  --dropdown-item-hover-bg: var(--toolbar-btn-hover-bg);
+  --dropdown-item-hover-color: var(--toolbar-btn-hover-color);
   /* ========== 编辑器相关变量 ========== */
   --editor-header-color: var(--primary-color);
   --editor-string-color: var(--oc-pink-5);
   --editor-comment-color: var(--oc-pink-5);
   --editor-quote-color: var(--oc-pink-9);
   --editor-link-color: var(--oc-pink-5);
-  --editor-url-bg-color: var(--oc-pink-1);
+  --editor-url-color: var(--oc-pink-1);
   --editor-v2-color: var(--oc-pink-9);
   --editor-v3-color: var(--primary-color);
   --editor-keyword-color: var(--oc-pink-5);
   --editor-selection-bg: var(--oc-pink-2);
+  --editor-active-line-bg: #fcc2d733;
   /* ========== Markdown 相关变量 ========== */
   --md-heading-color: var(--primary-color);
   --md-paragraph-color: var(--oc-pink-9);
@@ -7216,258 +7153,275 @@ div[data-code-wrap=wrap] div[data-type=codeBlock] code[class*=language-] {
   --accordion-summary-hover-bg: var(--oc-gray-3);
   --accordion-summary-bg: var(--oc-gray-2);
   --accordion-summary-color: var(--oc-gray-7);
-  --editor-url-bg-color: var(--oc-gray-2);
+  --dropdown-item-hover-bg: var(--oc-gray-2);
+  --dropdown-item-hover-color: var(--oc-gray-8);
+  --editor-url-color: var(--oc-gray-2);
+  --editor-active-line-bg: rgba(241, 243, 245, 0.4);
   --accordion-shadow: none;
 }
 
 /*
- * 淡雅主题
+ * Bear-inspired theme — warm, minimal, content-focused
  */
 .cherry.theme__violet {
   /* ========== 基础色彩变量覆盖 ========== */
-  --primary-color: var(--oc-violet-9);
-  --secondary-color: var(--oc-violet-0);
-  --base-font-color: var(--primary-color);
-  --base-editor-bg: var(--oc-white);
-  --base-previewer-bg: var(--oc-white);
-  --base-border-color: var(--oc-violet-8);
+  --primary-color: #c05040;
+  --secondary-color: #faf6f0;
+  --base-font-color: #3b3330;
+  --base-editor-bg: #faf6f0;
+  --base-previewer-bg: #faf6f0;
+  --base-border-color: #e0d6cc;
   /* ========== 工具栏相关变量 ========== */
-  --toolbar-bg: var(--oc-white);
-  --toolbar-btn-color: var(--primary-color);
-  --toolbar-btn-hover-bg: var(--oc-violet-5);
-  --toolbar-btn-hover-color: var(--oc-violet-0);
-  --toolbar-btn-active-bg: var(--oc-violet-7);
-  --toolbar-split-color: var(--oc-violet-8);
+  --toolbar-bg: #f5efe7;
+  --toolbar-btn-color: #6b5e55;
+  --toolbar-btn-hover-bg: #ebe3d9;
+  --toolbar-btn-hover-color: var(--primary-color);
+  --toolbar-btn-active-bg: #e0d6cc;
+  --toolbar-split-color: #e0d6cc;
+  --dropdown-item-hover-bg: #ebe3d9;
+  --dropdown-item-hover-color: var(--primary-color);
   /* ========== 编辑器相关变量 ========== */
-  --editor-header-color: var(--oc-violet-7);
-  --editor-string-color: var(--oc-violet-6);
-  --editor-comment-color: var(--oc-violet-6);
-  --editor-quote-color: var(--primary-color);
-  --editor-link-color: var(--oc-violet-6);
-  --editor-url-bg-color: var(--oc-violet-0);
-  --editor-v2-color: var(--primary-color);
-  --editor-v3-color: var(--oc-violet-7);
-  --editor-keyword-color: var(--oc-violet-6);
-  --editor-selection-bg: var(--oc-violet-2);
+  --editor-header-color: var(--primary-color);
+  --editor-string-color: #8a6d3b;
+  --editor-comment-color: #a89a8c;
+  --editor-quote-color: #8a7968;
+  --editor-link-color: #b85a4e;
+  --editor-url-color: #a89a8c;
+  --editor-v2-color: #3b3330;
+  --editor-v3-color: var(--primary-color);
+  --editor-keyword-color: #8a6d3b;
+  --editor-selection-bg: #e8d8c8;
+  --editor-active-line-bg: rgba(224, 214, 204, 0.4);
   /* ========== Markdown 相关变量 ========== */
-  --md-heading-color: var(--oc-violet-7);
-  --md-paragraph-color: var(--primary-color);
-  --md-link-color: var(--oc-violet-6);
-  --md-link-hover-color: var(--oc-violet-7);
-  --md-inline-code-color: var(--oc-violet-6);
-  --md-inline-code-bg: var(--oc-violet-1);
-  --md-blockquote-bg: var(--oc-violet-1);
-  --md-hr-border: var(--oc-violet-8);
+  --md-heading-color: #3b3330;
+  --md-paragraph-color: #3b3330;
+  --md-link-color: var(--primary-color);
+  --md-link-hover-color: #a03828;
+  --md-inline-code-color: #c05040;
+  --md-inline-code-bg: #f0e8de;
+  --md-blockquote-bg: #f0e8de;
+  --md-blockquote-border: #d4c4b0;
+  --md-blockquote-color: #8a7968;
+  --md-hr-border: #e0d6cc;
   /* ========== table 相关变量 ========== */
-  --md-table-border: var(--oc-violet-8);
+  --md-table-border: #e0d6cc;
   --md-table-drag-border-bg: var(--primary-color);
-  --md-table-sort-active-bg: var(--oc-violet-2);
+  --md-table-sort-active-bg: #ebe3d9;
   /* ========== Panel 相关变量 ========== */
-  --panel-border-radius: 4px;
-  --panel-bg: var(--oc-white);
-  --panel-border: 1px solid var(--oc-gray-2);
-  --panel-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  --panel-title-bg: var(--oc-gray-1);
-  --panel-title-color: var(--oc-gray-8);
-  --panel-title-border-radius: 2px 2px 0 0;
-  --panel-title-border-bottom: 1px solid var(--oc-gray-3);
-  --panel-body-bg: var(--oc-white);
-  --panel-body-color: var(--oc-gray-8);
-  --panel-body-border-radius: 0 0 2px 2px;
+  --panel-border-radius: 6px;
+  --panel-bg: #f5efe7;
+  --panel-border: 1px solid #e0d6cc;
+  --panel-box-shadow: none;
+  --panel-title-bg: #ebe3d9;
+  --panel-title-color: #3b3330;
+  --panel-title-border-radius: 6px 6px 0 0;
+  --panel-title-border-bottom: 1px solid #e0d6cc;
+  --panel-body-bg: #f5efe7;
+  --panel-body-color: #3b3330;
+  --panel-body-border-radius: 0 0 6px 6px;
   /* Primary Panel */
-  --panel-primary-border-color: var(--oc-blue-5);
-  --panel-primary-title-bg: var(--oc-blue-1);
-  --panel-primary-title-color: var(--oc-blue-8);
-  --panel-primary-title-border-bottom: 1px solid var(--oc-blue-3);
-  --panel-primary-body-bg: var(--oc-blue-0);
-  --panel-primary-body-color: var(--oc-blue-9);
+  --panel-primary-border-color: #c8a882;
+  --panel-primary-title-bg: #f0e0cc;
+  --panel-primary-title-color: #6b4c30;
+  --panel-primary-title-border-bottom: 1px solid #d4c4b0;
+  --panel-primary-body-bg: #faf2e8;
+  --panel-primary-body-color: #5a4030;
   /* Info Panel */
-  --panel-info-border-color: var(--oc-cyan-5);
-  --panel-info-title-bg: var(--oc-cyan-1);
-  --panel-info-title-color: var(--oc-cyan-8);
-  --panel-info-title-border-bottom: 1px solid var(--oc-cyan-3);
-  --panel-info-body-bg: var(--oc-cyan-0);
-  --panel-info-body-color: var(--oc-cyan-9);
+  --panel-info-border-color: #8cb8c8;
+  --panel-info-title-bg: #e0f0f4;
+  --panel-info-title-color: #3a6878;
+  --panel-info-title-border-bottom: 1px solid #b8d8e4;
+  --panel-info-body-bg: #f0f8fa;
+  --panel-info-body-color: #3a6878;
   /* Warning Panel */
-  --panel-warning-border-color: var(--oc-yellow-5);
-  --panel-warning-title-bg: var(--oc-yellow-1);
-  --panel-warning-title-color: var(--oc-yellow-8);
-  --panel-warning-title-border-bottom: 1px solid var(--oc-yellow-3);
-  --panel-warning-body-bg: var(--oc-yellow-0);
-  --panel-warning-body-color: var(--oc-yellow-9);
+  --panel-warning-border-color: #d4b06a;
+  --panel-warning-title-bg: #faf0d8;
+  --panel-warning-title-color: #7a5c20;
+  --panel-warning-title-border-bottom: 1px solid #e8d4a0;
+  --panel-warning-body-bg: #fdf8ee;
+  --panel-warning-body-color: #7a5c20;
   /* Danger Panel */
-  --panel-danger-border-color: var(--oc-red-5);
-  --panel-danger-title-bg: var(--oc-red-1);
-  --panel-danger-title-color: var(--oc-red-8);
-  --panel-danger-title-border-bottom: 1px solid var(--oc-red-3);
-  --panel-danger-body-bg: var(--oc-red-0);
-  --panel-danger-body-color: var(--oc-red-9);
+  --panel-danger-border-color: #d08070;
+  --panel-danger-title-bg: #fae8e4;
+  --panel-danger-title-color: #8a3828;
+  --panel-danger-title-border-bottom: 1px solid #e4c0b8;
+  --panel-danger-body-bg: #fdf4f2;
+  --panel-danger-body-color: #8a3828;
   /* Success Panel */
-  --panel-success-border-color: var(--oc-green-5);
-  --panel-success-title-bg: var(--oc-green-1);
-  --panel-success-title-color: var(--oc-green-8);
-  --panel-success-title-border-bottom: 1px solid var(--oc-green-3);
-  --panel-success-body-bg: var(--oc-green-0);
-  --panel-success-body-color: var(--oc-green-9);
-  --md-toc-bg: var(--oc-violet-0);
-  --md-toc-indicator-color: var(--oc-violet-1);
-  --md-toc-link-hover-bg: var(--oc-violet-1);
-  --md-toc-link-active-bg: var(--oc-violet-2);
+  --panel-success-border-color: #88b888;
+  --panel-success-title-bg: #e4f0e4;
+  --panel-success-title-color: #3a6838;
+  --panel-success-title-border-bottom: 1px solid #b8d4b8;
+  --panel-success-body-bg: #f2f8f2;
+  --panel-success-body-color: #3a6838;
+  --md-toc-bg: #f5efe7;
+  --md-toc-border-color: #e0d6cc;
+  --md-toc-indicator-color: #e0d6cc;
+  --md-toc-link-hover-bg: #ebe3d9;
+  --md-toc-link-active-bg: #e0d6cc;
   /* ========== 手风琴组件变量覆盖 ========== */
-  --accordion-bg: var(--oc-violet-0);
-  --accordion-border: var(--oc-violet-2);
-  --accordion-summary-bg: var(--oc-violet-6);
-  --accordion-summary-hover-bg: var(--oc-violet-5);
-  --accordion-body-bg: var(--oc-violet-0);
-  --accordion-body-border: var(--oc-violet-1);
-  --accordion-body-color: var(--primary-color);
+  --accordion-bg: #f5efe7;
+  --accordion-border: #e0d6cc;
+  --accordion-summary-bg: #c05040;
+  --accordion-summary-hover-bg: #a84438;
+  --accordion-body-bg: #f5efe7;
+  --accordion-body-border: #ebe3d9;
+  --accordion-body-color: #3b3330;
 }
 
 /** 预览区域样式 */
-.cherry-markdown.theme__violet h1,
-.cherry-markdown.theme__violet h2,
-.cherry-markdown.theme__violet h3,
-.cherry-markdown.theme__violet h4,
-.cherry-markdown.theme__violet h5 {
-  text-align: center;
-  margin-bottom: 35px;
+.cherry-markdown.theme__violet h1 {
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e0d6cc;
+  margin-bottom: 24px;
 }
 
 /*
- * 清幽主题
+ * Editary-inspired theme — professional writing, forest-green accent, paper-like
  */
 .cherry.theme__blue {
   /* ========== 基础色彩变量覆盖 ========== */
-  --primary-color: var(--oc-indigo-6);
-  --secondary-color: var(--oc-violet-0);
-  --base-font-color: var(--oc-indigo-8);
-  --base-editor-bg: var(--oc-violet-0);
-  --base-previewer-bg: var(--oc-violet-0);
-  --base-border-color: var(--oc-indigo-4);
+  --primary-color: #2b7a4b;
+  --secondary-color: #f4f8f6;
+  --base-font-color: #1a1a1a;
+  --base-editor-bg: #fbfbfa;
+  --base-previewer-bg: #fbfbfa;
+  --base-border-color: #e2e2e0;
   /* ========== 工具栏相关变量 ========== */
-  --toolbar-bg: var(--oc-violet-1);
-  --toolbar-btn-color: var(--oc-indigo-7);
-  --toolbar-btn-hover-bg: var(--oc-violet-3);
-  --toolbar-btn-hover-color: var(--oc-white);
-  --toolbar-btn-active-bg:var(--oc-blue-5);
-  --toolbar-split-color: var(--oc-indigo-4);
-  --dropdown-bg: var(--oc-white);
+  --toolbar-bg: #fbfbfa;
+  --toolbar-btn-color: #4a4a48;
+  --toolbar-btn-hover-bg: #eef2f0;
+  --toolbar-btn-hover-color: var(--primary-color);
+  --toolbar-btn-active-bg: #e2e2e0;
+  --toolbar-split-color: #e2e2e0;
+  --dropdown-bg: #ffffff;
+  --dropdown-item-hover-bg: #eef2f0;
+  --dropdown-item-hover-color: var(--primary-color);
   /* ========== 编辑器相关变量 ========== */
   --editor-header-color: var(--primary-color);
-  --editor-string-color: var(--oc-indigo-5);
-  --editor-comment-color: var(--oc-indigo-5);
-  --editor-quote-color: var(--oc-indigo-8);
-  --editor-link-color: var(--oc-indigo-5);
-  --editor-url-bg-color: var(--oc-violet-1);
-  --editor-v2-color: var(--oc-indigo-8);
+  --editor-string-color: #2b7a4b;
+  --editor-comment-color: #9c9c9a;
+  --editor-quote-color: #5a5a58;
+  --editor-link-color: #1a6b8a;
+  --editor-url-color: rgba(43, 122, 75, 0.1);
+  --editor-v2-color: #1a1a1a;
   --editor-v3-color: var(--primary-color);
-  --editor-keyword-color: var(--oc-indigo-5);
-  --editor-selection-bg: var(--oc-violet-2);
+  --editor-keyword-color: #1a6b8a;
+  --editor-selection-bg: #c8e6d4;
+  --editor-active-line-bg: rgba(43, 122, 75, 0.05);
   /* ========== Markdown 相关变量 ========== */
-  --md-heading-color: var(--primary-color);
-  --md-paragraph-color: var(--oc-indigo-8);
-  --md-link-color: var(--oc-indigo-5);
+  --md-heading-color: #1a1a1a;
+  --md-paragraph-color: #1a1a1a;
+  --md-link-color: #1a6b8a;
   --md-link-hover-color: var(--primary-color);
-  --md-inline-code-color: var(--oc-indigo-5);
-  --md-inline-code-bg: var(--oc-violet-1);
-  --md-blockquote-bg: var(--oc-violet-1);
-  --md-hr-border: var(--oc-indigo-4);
+  --md-inline-code-color: #c7254e;
+  --md-inline-code-bg: #f2f2f0;
+  --md-blockquote-bg: #f7f9f8;
+  --md-blockquote-border: #2b7a4b;
+  --md-blockquote-color: #5a5a58;
+  --md-hr-border: #e2e2e0;
   /* ========== table 相关变量 ========== */
-  --md-table-border: var(--oc-blue-5);
-  --md-table-add-border: var(--oc-blue-9);
-  --md-table-delete-bg: var(--oc-violet-1);
-  --md-table-sort-active-bg: var(--oc-blue-5);
-  --md-table-sort-border: var(--oc-indigo-4);
-  /* ========== table 相关变量 ========== */
-  --md-table-border: var(--oc-blue-5);
+  --md-table-border: #e2e2e0;
   --md-table-drag-border-bg: var(--primary-color);
-  --md-table-sort-active-bg: rgba(184, 134, 253, 0.4);
-  --md-paragraph-highlight-line-bg: var(--oc-violet-1);
+  --md-table-sort-active-bg: rgba(43, 122, 75, 0.1);
+  --md-paragraph-highlight-line-bg: #f4f8f6;
   /* ========== Panel 相关变量 ========== */
-  --panel-border-radius: 0;
-  --panel-bg: transparent;
-  --panel-border: none;
+  --panel-border-radius: 4px;
+  --panel-bg: #f7f9f8;
+  --panel-border: 1px solid #e2e2e0;
   --panel-box-shadow: none;
-  --panel-title-bg: transparent;
-  --panel-title-color: inherit;
-  --panel-body-bg: transparent;
-  --panel-body-color: inherit;
+  --panel-title-bg: #eef2f0;
+  --panel-title-color: #1a1a1a;
+  --panel-title-border-radius: 4px 4px 0 0;
+  --panel-title-border-bottom: 1px solid #e2e2e0;
+  --panel-body-bg: #fbfbfa;
+  --panel-body-color: #1a1a1a;
+  --panel-body-border-radius: 0 0 4px 4px;
   /* Primary Panel */
-  --panel-primary-border: none;
-  --panel-primary-border-color: transparent;
-  --panel-primary-title-bg: transparent;
-  --panel-primary-bg: transparent;
-  --panel-primary-title-color: var(--oc-blue-7);
-  --panel-primary-body-color: inherit;
+  --panel-primary-bg: rgba(43, 122, 75, 0.05);
+  --panel-primary-border-color: #2b7a4b;
+  --panel-primary-title-bg: rgba(43, 122, 75, 0.1);
+  --panel-primary-title-color: #1a5a38;
+  --panel-primary-body-bg: rgba(43, 122, 75, 0.03);
+  --panel-primary-body-color: #1a1a1a;
   /* Info Panel */
-  --panel-info-border: none;
-  --panel-info-border-color: transparent;
-  --panel-info-title-bg: transparent;
-  --panel-info-bg: transparent;
-  --panel-info-title-color: var(--oc-cyan-7);
-  --panel-info-body-color: inherit;
+  --panel-info-bg: rgba(26, 107, 138, 0.05);
+  --panel-info-border-color: #1a6b8a;
+  --panel-info-title-bg: rgba(26, 107, 138, 0.1);
+  --panel-info-title-color: #145570;
+  --panel-info-body-bg: rgba(26, 107, 138, 0.03);
+  --panel-info-body-color: #1a1a1a;
   /* Warning Panel */
-  --panel-warning-border: none;
-  --panel-warning-border-color: transparent;
-  --panel-warning-title-bg: transparent;
-  --panel-warning-bg: transparent;
-  --panel-warning-title-color: var(--oc-yellow-7);
-  --panel-warning-body-color: inherit;
+  --panel-warning-bg: rgba(196, 152, 42, 0.05);
+  --panel-warning-border-color: #c4982a;
+  --panel-warning-title-bg: rgba(196, 152, 42, 0.1);
+  --panel-warning-title-color: #8a6a18;
+  --panel-warning-body-bg: rgba(196, 152, 42, 0.03);
+  --panel-warning-body-color: #1a1a1a;
   /* Danger Panel */
-  --panel-danger-border: none;
-  --panel-danger-border-color: transparent;
-  --panel-danger-title-bg: transparent;
-  --panel-danger-bg: transparent;
-  --panel-danger-title-color: var(--oc-pink-7);
-  --panel-danger-body-color: inherit;
+  --panel-danger-bg: rgba(199, 37, 78, 0.05);
+  --panel-danger-border-color: #c7254e;
+  --panel-danger-title-bg: rgba(199, 37, 78, 0.1);
+  --panel-danger-title-color: #9a1a3a;
+  --panel-danger-body-bg: rgba(199, 37, 78, 0.03);
+  --panel-danger-body-color: #1a1a1a;
   /* Success Panel */
-  --panel-success-border: none;
-  --panel-success-border-color: transparent;
-  --panel-success-title-bg: transparent;
-  --panel-success-bg: transparent;
-  --panel-success-title-color: var(--oc-teal-7);
-  --panel-success-body-color: inherit;
-  --md-toc-bg: var(--oc-white);
-  --md-toc-border-color: var(--base-border-color);
-  --md-toc-indicator-color: var(--oc-indigo-1);
-  --md-toc-link-hover-bg: var(--oc-violet-0);
-  --md-toc-link-active-bg: var(--oc-violet-1);
+  --panel-success-bg: rgba(43, 122, 75, 0.05);
+  --panel-success-border-color: #2b7a4b;
+  --panel-success-title-bg: rgba(43, 122, 75, 0.1);
+  --panel-success-title-color: #1a5a38;
+  --panel-success-body-bg: rgba(43, 122, 75, 0.03);
+  --panel-success-body-color: #1a1a1a;
+  --md-toc-bg: #f7f9f8;
+  --md-toc-border-color: #e2e2e0;
+  --md-toc-indicator-color: #d0d0ce;
+  --md-toc-link-hover-bg: #eef2f0;
+  --md-toc-link-active-bg: #e2e8e5;
   /* ========== 手风琴组件变量覆盖 ========== */
-  --accordion-bg: var(--oc-violet-0);
-  --accordion-border: var(--oc-indigo-2);
-  --accordion-summary-bg: var(--oc-indigo-6);
-  --accordion-summary-hover-bg: var(--oc-indigo-5);
-  --accordion-body-bg: var(--oc-violet-0);
-  --accordion-body-border: var(--oc-indigo-1);
-  --accordion-body-color: var(--oc-indigo-8);
+  --accordion-bg: #f7f9f8;
+  --accordion-border: #e2e2e0;
+  --accordion-summary-bg: #2b7a4b;
+  --accordion-summary-hover-bg: #236640;
+  --accordion-body-bg: #fbfbfa;
+  --accordion-body-border: #eef2f0;
+  --accordion-body-color: #1a1a1a;
+}
+
+.cherry.theme__blue .cherry-toolbar {
+  box-shadow: none;
 }
 
 /** 预览区域样式 */
 .cherry-markdown.theme__blue {
-  /** Blue主题特殊的panel样式 - 使用左边框 */
+  /** Editary-style: h1 with bottom border for clear section separation */
 }
-.cherry-markdown.theme__blue h1,
-.cherry-markdown.theme__blue h2,
-.cherry-markdown.theme__blue h3,
-.cherry-markdown.theme__blue h4,
-.cherry-markdown.theme__blue h5 {
-  text-align: center;
-  border-bottom: 1px dashed var(--md-hr-border);
-  padding-bottom: 15px;
-  margin-bottom: 25px;
+
+.cherry-markdown.theme__blue h1 {
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e2e2e0;
+  margin-bottom: 24px;
 }
+
+.cherry-markdown.theme__blue {
+  /** Editary-style: left-border panels for structured callouts */
+}
+
 .cherry-markdown.theme__blue .cherry-panel__primary {
-  border-left: 4px solid var(--oc-blue-6);
+  border-left: 3px solid #2b7a4b;
 }
+
 .cherry-markdown.theme__blue .cherry-panel__info {
-  border-left: 4px solid var(--oc-cyan-6);
+  border-left: 3px solid #1a6b8a;
 }
+
 .cherry-markdown.theme__blue .cherry-panel__warning {
-  border-left: 4px solid var(--oc-yellow-6);
+  border-left: 3px solid #c4982a;
 }
+
 .cherry-markdown.theme__blue .cherry-panel__danger {
-  border-left: 4px solid var(--oc-pink-6);
+  border-left: 3px solid #c7254e;
 }
+
 .cherry-markdown.theme__blue .cherry-panel__success {
-  border-left: 4px solid var(--oc-teal-6);
+  border-left: 3px solid #2b7a4b;
 }

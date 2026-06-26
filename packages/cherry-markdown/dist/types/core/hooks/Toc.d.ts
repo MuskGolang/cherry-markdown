@@ -47,6 +47,7 @@ export default class Toc extends ParagraphBase {
         isInBlockquote: boolean;
     }[]): string;
     $makeToc(arr: any, dataSign: any, preLinesMatch: any): string;
+    afterMakeHtml(str: any): any;
     test(str: any, flavor: any): any;
     /**
      * TODO: fix type errors, prefer use `rules` for multiple spec instead
@@ -54,6 +55,6 @@ export default class Toc extends ParagraphBase {
      */
     rule(): any;
 }
-import ParagraphBase from "@/core/ParagraphBase";
+import ParagraphBase from '@/core/ParagraphBase';
 declare function defaultLinkProcessor(link: any): any;
 export {};

@@ -10,6 +10,7 @@
  */
 export default class Detail extends ParagraphBase {
     constructor();
+    makeHtml(str: any, sentenceMakeFunc: any): any;
     $getDetailInfo(isOpen: any, title: any, str: any, sentenceMakeFunc: any): {
         type: string;
         html: string;
@@ -17,4 +18,4 @@ export default class Detail extends ParagraphBase {
     $getDetailHtml(defaultOpen: any, title: any, str: any, sentenceMakeFunc: any): string;
     rule(): any;
 }
-import ParagraphBase from "@/core/ParagraphBase";
+import ParagraphBase from '@/core/ParagraphBase';
